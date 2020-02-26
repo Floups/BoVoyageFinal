@@ -38,6 +38,7 @@ namespace BoVoyage
             services.AddDbContext<BoVoyageContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -64,6 +65,10 @@ namespace BoVoyage
 
             app.UseEndpoints(endpoints =>
             {
+                //Route pour prendre en compte les aires
+                endpoints.MapControllerRoute(
+                    name: "areaRoute",
+                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");

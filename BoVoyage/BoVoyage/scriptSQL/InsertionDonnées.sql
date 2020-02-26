@@ -15,6 +15,11 @@ declare @voyage as table(
      Descriptif Nvarchar(500)
 )
 
+declare @photos as table(
+     NomFichier NVARCHAR(100),
+     IdDestination INT
+)
+
 insert @destination values
 (1,'Guadeloupe', 3,'Dans un site exceptionnel,en bordure d''un petit lagon turquoise, tout est réuni pour un séjour paradisiaque. Découvrez les merveilles de grande terre et de basse terre, les joies des plongées dans la réserve naturelle.'),
 (2,'Saint-Barthélémy',3,'Imaginez une île où il fait 26 à 28 °C toute l''année. Baignez vous dans une eau turquoise.'),
@@ -29,8 +34,13 @@ insert @voyage values
 (4,GETDATE(),DATEADD(day,10,GETDATE()),2,354,0.70,'sirop d''erable'),
 (5,GETDATE(),DATEADD(day,10,GETDATE()),3,236,0.00,'cidre et crepe')
 
+insert @photos values
+('guadeloupe_1.jpg', 1),
+('guadeloupe_2.jpg', 1)
+
 insert Destination select * from @destination
 
 insert Voyage select * from @voyage
 
+insert Photo select * from @photos
 

@@ -22,7 +22,23 @@ namespace BoVoyage.Areas.Client.Controllers
         // GET: Client/Voyages
         public async Task<IActionResult> Index()
         {
-            var listeVoyages = await _context.Voyage.Include(v=>v.IdDestinationNavigation).ToListAsync();
+            var listeVoyages = await _context.Voyage.Include(v=>v.IdDestinationNavigation).ThenInclude(d => d.Photo).ToListAsync();
+            var photos = new Dictionary<int, string>();
+            foreach (var item in listeVoyages)
+            {
+                Photo photo = item.IdDestinationNavigation.Photo.FirstOrDefault();
+                if (photo == null)
+                {
+                    photos.Add(item.IdDestination, "no_result.jpg");
+                }
+                else
+                {
+                    photos.Add(item.IdDestination, photo.NomFichier);
+
+                }
+            }
+
+            ViewBag.Photos = photos;
 
             return View(listeVoyages);
         }

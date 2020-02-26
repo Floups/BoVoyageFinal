@@ -22,7 +22,7 @@ namespace BoVoyage.Areas.Client.Controllers
         // GET: Client/Voyages
         public async Task<IActionResult> Index()
         {
-            var listeVoyages = await _context.Voyage.ToListAsync();
+            var listeVoyages = await _context.Voyage.Include(v=>v.IdDestinationNavigation).ToListAsync();
 
             return View(listeVoyages);
         }
@@ -40,7 +40,7 @@ namespace BoVoyage.Areas.Client.Controllers
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (voyage == null)
             {
-                return NotFound();
+                return NotFound("Le voyage demandé ne se trouve pas dans notre base de données.");
             }
 
             return View(voyage);

@@ -52,7 +52,7 @@ namespace BoVoyage.Areas.Client.Controllers
             }
 
             var voyage = await _context.Voyage
-                .Include(v => v.IdDestinationNavigation)
+                .Include(v => v.IdDestinationNavigation).ThenInclude(d => d.Photo)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (voyage == null)
             {

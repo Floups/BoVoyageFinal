@@ -1,6 +1,4 @@
-drop database if exists BoVoyage
-Create database BoVoyage
-use BoVoyage
+
 CREATE TABLE Client (
 	Id INTEGER NOT NULL
 )
@@ -35,7 +33,7 @@ CREATE TABLE Dossierresa
      IdClient INTEGER NOT NULL , 
      IdEtatDossier TINYINT NOT NULL , 
      IdVoyage INTEGER NOT Null,
-	 PrixTotal DECIMAL(18,2) Not Null ) 
+	 PrixTotal DECIMAL Not Null ) 
 Go
 
 ALTER TABLE DossierResa ADD Constraint Dossierresa_Pk PRIMARY KEY (Id)

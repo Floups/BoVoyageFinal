@@ -32,7 +32,7 @@ namespace BoVoyage.Areas.Client.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return NotFound("Le voyage demandé ne se trouve pas dans notre base de données.");
             }
 
             var voyage = await _context.Voyage

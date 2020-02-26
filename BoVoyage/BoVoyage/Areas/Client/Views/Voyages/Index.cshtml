@@ -1,0 +1,26 @@
+﻿@model IEnumerable<BoVoyage.Models.Voyage>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="row">
+    @foreach (var voyage in Model)
+
+    {
+        @if (voyage.PlacesDispo != 0)
+        {<div class="card" style="width: 20rem; margin:1em">
+                <img src="..." class="card-img-top" alt="@Html.DisplayFor(modelItem => voyage.IdDestinationNavigation.Nom)">
+                <div class="card-body">
+                    <h5 class="card-title">@Html.DisplayFor(modelItem => voyage.IdDestinationNavigation.Nom)</h5>
+                    <p class="card-text">
+                        Du <bold>@Html.DisplayFor(modelItem => voyage.DateDepart) </bold>
+                        au <bold>@Html.DisplayFor(modelItem => voyage.DateRetour) </bold>
+                    </p>
+                    <p>@Html.DisplayFor(modelItem => voyage.Descriptif) </p>
+                    <p>Au prix de @Html.DisplayFor(modelItem => voyage.PrixHt) €! Transport et hébergement compris!</p>
+                    <a asp-action="Details" asp-route-id="@voyage.Id" class="btn btn-primary">En savoir plus</a>
+                </div>
+            </div>}
+
+    }
+</div>

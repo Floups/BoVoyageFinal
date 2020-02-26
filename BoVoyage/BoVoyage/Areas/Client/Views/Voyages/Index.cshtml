@@ -13,11 +13,11 @@
                 <div class="card-body">
                     <h5 class="card-title">@Html.DisplayFor(modelItem => voyage.IdDestinationNavigation.Nom)</h5>
                     <p class="card-text">
-                        Du <bold>@Html.DisplayFor(modelItem => voyage.DateDepart) </bold>
-                        au <bold>@Html.DisplayFor(modelItem => voyage.DateRetour) </bold>
+                        Du <strong>@Html.DisplayFor(modelItem => voyage.DateDepart) </strong>
+                        au <strong>@Html.DisplayFor(modelItem => voyage.DateRetour) </strong>
                     </p>
                     <p>@Html.DisplayFor(modelItem => voyage.Descriptif) </p>
-                    <p>Au prix de @Html.DisplayFor(modelItem => voyage.PrixHt) €! Transport et hébergement compris!</p>
+                    <p>Au prix de @Html.DisplayFor(modelItem => voyage.PrixHt) <em style="font-size:12px">par personne</em>!</p>
                     <a asp-action="Details" asp-route-id="@voyage.Id" class="btn btn-primary">En savoir plus</a>
                 </div>
             </div>}

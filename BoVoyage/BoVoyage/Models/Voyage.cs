@@ -20,7 +20,7 @@ namespace BoVoyage.Models
         public DateTime DateRetour { get; set; }
         [Display(Name = "Nombre de places disponibles")]
         public int PlacesDispo { get; set; }
-        [Display(Name = "Prix HT")]
+        [Display(Name = "Prix HT"),DataType(DataType.Currency)]
         public decimal PrixHt { get; set; }
         public decimal Reduction { get; set; }
         public string Descriptif { get; set; }

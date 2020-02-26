@@ -22,8 +22,9 @@ namespace BoVoyage.Areas.Client.Controllers
         // GET: Client/Voyages
         public async Task<IActionResult> Index()
         {
-            var boVoyageContext = _context.Voyage.Include(v => v.IdDestinationNavigation);
-            return View(await boVoyageContext.ToListAsync());
+            var listeVoyages = await _context.Voyage.ToListAsync();
+
+            return View(listeVoyages);
         }
 
         // GET: Client/Voyages/Details/5

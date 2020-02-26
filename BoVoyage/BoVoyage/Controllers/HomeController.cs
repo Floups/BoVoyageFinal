@@ -23,7 +23,7 @@ namespace BoVoyage.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult AProposDe()
         {
             return View();
         }

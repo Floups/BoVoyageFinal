@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using BoVoyage.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BoVoyage.Controllers
 {
@@ -20,8 +21,11 @@ namespace BoVoyage.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+       
+        public async Task<IActionResult> Index()
         {
+            var voyagesMoinsCher = await _context.Voyage.OrderByDescending(v => v.PrixHt).Take(5).ToListAsync();
+            ViewBag.VoyagesMoinsCher = voyagesMoinsCher;
             return View();
         }
 

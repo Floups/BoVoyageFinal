@@ -1,26 +1,42 @@
 ﻿@model IEnumerable<BoVoyage.Models.Voyage>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Nos Voyages";
 }
-<div class="row">
-    @foreach (var voyage in Model)
+<div class="row mb-3">
+    <div class="col-12">
+        <h1 class="text-center">Nos Voyages</h1>
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div class="card-columns">
 
-    {
-        @if (voyage.PlacesDispo != 0)
-        {<div class="card" style="width: 20rem; margin:1em">
-                <img src="..." class="card-img-top" alt="@Html.DisplayFor(modelItem => voyage.IdDestinationNavigation.Nom)">
-                <div class="card-body">
-                    <h5 class="card-title">@Html.DisplayFor(modelItem => voyage.IdDestinationNavigation.Nom)</h5>
-                    <p class="card-text">
-                        Du <strong>@Html.DisplayFor(modelItem => voyage.DateDepart) </strong>
-                        au <strong>@Html.DisplayFor(modelItem => voyage.DateRetour) </strong>
-                    </p>
-                    <p>@Html.DisplayFor(modelItem => voyage.Descriptif) </p>
-                    <p>Au prix de @Html.DisplayFor(modelItem => voyage.PrixHt) <em style="font-size:12px">par personne</em>!</p>
-                    <a asp-action="Details" asp-route-id="@voyage.Id" class="btn btn-primary">En savoir plus</a>
-                </div>
-            </div>}
+            @foreach (var voyage in Model)
 
-    }
+            {
+                @if (voyage.PlacesDispo != 0)
+                {<div class="card">
+                        <img src="/img/@ViewBag.Photos[voyage.IdDestination]" class="card-img-top" alt="@Html.DisplayFor(modelItem => voyage.IdDestinationNavigation.Nom)">
+                        <div class="card-body">
+                            <h3 class="card-title">@Html.DisplayFor(modelItem => voyage.IdDestinationNavigation.Nom)</h3>
+                            <p class="card-text">
+                                Du <strong>@Html.DisplayFor(modelItem => voyage.DateDepart) </strong>
+                                au <strong>@Html.DisplayFor(modelItem => voyage.DateRetour) </strong>
+                            </p>
+                            <p>@Html.DisplayFor(modelItem => voyage.Descriptif)</p>
+                            <div class="d-flex justify-content-center">
+
+                                <a asp-action="Details" asp-route-id="@voyage.Id" class="btn btn-secondary">En savoir plus</a>  
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <p class="text-center">Au prix de <span class="font-weight-bold">@Html.DisplayFor(modelItem => voyage.PrixHt)</span>/personne</p>
+                        </div>
+                    </div>}
+
+            }
+        </div>
+
+    </div>
 </div>

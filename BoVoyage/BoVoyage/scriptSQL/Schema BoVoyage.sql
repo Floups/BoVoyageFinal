@@ -1,3 +1,8 @@
+Drop Database if exists BoVoyage
+
+CREATE Database BoVoyage
+
+Use BoVoyage
 
 CREATE TABLE Client (
 	Id INTEGER NOT NULL

@@ -39,7 +39,8 @@
         <input class="form-control input-group mb-3" type="date" name="dateMin" value="@ViewBag.DateMin" />
         <input class="form-control input-group mb-3" type="date" name="dateMax" value="@ViewBag.DateMax" />
 
-        <input type="submit" value="Filtrer" />
+        <button class="btn btn-primary" type="submit">Filtrer</button> 
+        <a class="btn btn-primary" asp-action="Index"> Effacer filtre </a>
     </form>
 
         <div class="col-md-10">

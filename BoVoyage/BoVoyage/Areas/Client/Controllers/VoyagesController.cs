@@ -67,7 +67,10 @@ namespace BoVoyage.Areas.Client.Controllers
                 }
                 else
                 {
-                    photos.Add(item.IdDestination, photo.NomFichier);
+                    if (!photos.ContainsKey(item.IdDestination))
+                    {
+                        photos.Add(item.IdDestination, photo.NomFichier);
+                    }
 
                 }
             }

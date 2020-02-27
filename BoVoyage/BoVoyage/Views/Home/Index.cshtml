@@ -1,27 +1,55 @@
 ﻿@{
     ViewData["Title"] = "Accueil";
+   
 }
 
 <section id="presentationAccueil" class="row justify-content-center">
-    <div class="col-md-9">
+    <div class="col-md-9 mb-3">
 
         <h1 class="display-4 text-center">Bienvenue sur BoVoyage</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-        Excepteur sint occaecat cupidatat non proident,
-        sunt in culpa qui officia deserunt mollit anim id est laborum</p>
+        <p>
+            Nous vous proposons différentes formules de voyages/vacances à des prix soldés. La remise peut aller jusqu’à
+            50 % du prix public normalement pratiqué par les agences de voyage.
+        </p>
+        <p>
+            N'hésitez pas à faire appelle à nous pour vos vacances, vous ne trouverez pas mieux ailleurs !
+        </p>
+        <p>
+            Pour en savoir plus sur notre mode de fonctionnement et notre entreprise, dirigez vous dans cette <a asp-action="AProposDe">section dédiée</a>.
+        </p>
     </div>
 </section>
-<section id="voyagesMoinsCher" class="row">
+<h2 class="text-center">Nos Bons Plans</h2>
+<section id="voyagesMoinsCher" class="accueilCard d-flex flex-lg-nowrap flex-wrap justify-content-lg-around justify-content-center">
     @foreach (var item in ViewBag.VoyagesMoinsCher)
     {
-        <p>@item.Descriptif</p>
+        <partial name="VoyageCard" model="item" />
     }
 </section>
-<section id="voyagesDateProche" class="row">
-
+<h2 class="text-center">Départ iminent</h2>
+<section id="voyagesDateProche" class="accueilCard d-flex flex-lg-nowrap flex-wrap justify-content-lg-around justify-content-center">
+    @foreach (var item in ViewBag.VoyagesDateProche)
+    {
+        <partial name="VoyageCard" model="item" />
+    }
 </section>
-<section id="voyagePaysPopulaire" class="row">
-
+<h2 class="text-center">Région avec le plus de Voyages</h2>
+<section id="regionNbVoyage" class="accueilCard d-flex flex-lg-nowrap flex-wrap justify-content-lg-around justify-content-center">
+    @for (int i = 0; i < 5; i++)
+    {
+        string[] descriptionMinim = @ViewBag.RegionNbVoyage[i].Description.Split(' ', 20);
+        descriptionMinim[descriptionMinim.Length - 1] = " ...";  
+        <div class="">
+            <div class="card m-3">
+                <img src="~/img/@(ViewBag.RegionNbVoyage[i].Photo[0].NomFichier)" class="card-img-top" alt="@(ViewBag.RegionNbVoyage[i].Photo[0].NomFichier)">
+                <div class="card-body">
+                    <h3 class="card-title">@ViewBag.RegionNbVoyage[i].Nom</h3>                    
+                    <p class="text-justify">@string.Join(' ', descriptionMinim)</p>
+                    <div class="d-flex justify-content-center">
+                        <a asp-action="Details" asp-route-id="" class="btn btn-secondary">Liste des Voyages</a>
+                    </div>
+                </div>                
+            </div>
+        </div>
+    }    
 </section>

@@ -86,7 +86,7 @@ CREATE TABLE Voyage
      DateRetour DATE NOT NULL , 
      PlacesDispo INTEGER NOT NULL , 
      PrixHT DECIMAL (16,4) NOT NULL DEFAULT 0 , 
-     Reduction DECIMAL (3,2) NOT NULL , Descriptif Nvarchar(500) ) 
+     Reduction DECIMAL (3,2) NOT NULL , Descriptif Nvarchar(1500) ) 
 Go
 
 ALTER TABLE Voyage ADD Constraint Voyage_Pk PRIMARY KEY (Id)

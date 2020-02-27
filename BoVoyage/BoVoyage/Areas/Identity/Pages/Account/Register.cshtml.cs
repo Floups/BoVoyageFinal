@@ -47,18 +47,18 @@ namespace BoVoyage.Areas.Identity.Pages.Account
         {
             [Required]
             [EmailAddress]
-            [Display(Name = "Email")]
+            [Display(Name = "Adresse e-mail")]
             public string Email { get; set; }
 
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(100, ErrorMessage = "Le {0} doit avoir au moins {2} et au maximum {1} caractères.", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "Password")]
+            [Display(Name = "Mot de passe")]
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Display(Name = "Confirmer mot de passe")]
+            [Compare("Password", ErrorMessage = "Le mot de passe de confirmation ne correspond pas au mot de passe.")]
             public string ConfirmPassword { get; set; }
         }
 
@@ -89,7 +89,7 @@ namespace BoVoyage.Areas.Identity.Pages.Account
                         protocol: Request.Scheme);
 
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                        $"Merci de confirmer la créaction de votre compte en cliquant <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>ici</a>.");
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {

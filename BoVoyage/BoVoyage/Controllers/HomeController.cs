@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using BoVoyage.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Data.SqlClient;
 
 namespace BoVoyage.Controllers
 {
@@ -21,18 +22,49 @@ namespace BoVoyage.Controllers
             _context = context;
         }
 
-       
+
         public async Task<IActionResult> Index()
         {
-            var voyagesMoinsCher = await _context.Voyage.OrderByDescending(v => v.PrixHt).Take(5).ToListAsync();
+            var voyagesMoinsCher =  _context.Voyage.OrderBy(v => v.PrixHt).Take(5).Include(v => v.IdDestinationNavigation).ThenInclude(d => d.Photo).ToList();
             ViewBag.VoyagesMoinsCher = voyagesMoinsCher;
-            return View();
+
+            ViewBag.VoyagesDateProche =  _context.Voyage.OrderBy(v => v.DateDepart).Take(5).Include(v => v.IdDestinationNavigation).ThenInclude(d => d.Photo).ToList();
+
+            var idRegionNbvoyage = new List<int>();
+            var regionNbVoyage = new List<Destination>();
+
+            using (var cnx = (SqlConnection)_context.Database.GetDbConnection())
+            {
+
+                //On récupère les id des régions avec le plus de voyage
+                var cmd = new SqlCommand(@"select idDestination from Voyage group by IdDestination order by Count(*) desc ", cnx);
+
+                cnx.Open();
+
+                using (SqlDataReader sdr = cmd.ExecuteReader())
+                {
+                    while (sdr.Read())
+                    {
+                        idRegionNbvoyage.Add((int)sdr["IdDestination"]);                        
+                    }
+
+                }
+                foreach (var item in idRegionNbvoyage)
+                {
+                    regionNbVoyage.Add(_context.Destination.Include(d => d.Photo).Where(d => d.Id == item).FirstOrDefault());                    
+                }
+            }
+           
+
+            ViewBag.RegionNbVoyage = regionNbVoyage;
+            return View();            
         }
 
         public IActionResult AProposDe()
         {
             return View();
         }
+
         public IActionResult Contact(ContactViewModel newContact)
         {
 
@@ -44,7 +76,7 @@ namespace BoVoyage.Controllers
         public async Task<IActionResult> Create([Bind("Civilite", "Nom", "Prenom", "Telephone", "Email", "SujetMessage", "Message")] ContactViewModel newContact)
         {
             var pers = _context.Personne.Where(p => p.Email == newContact.Email).FirstOrDefault();
-            
+
             if (pers == null)
             {
                 Personne personne = new Personne()
@@ -60,12 +92,12 @@ namespace BoVoyage.Controllers
                 {
                     _context.Personne.Add(personne);
                     await _context.SaveChangesAsync();
-                    
+
                     //return RedirectToAction(nameof(Contact));
                 }
             }
-            if(ModelState.IsValid && newContact.SujetMessage!=null && newContact.Message!=null)
-            ViewBag.Valid = "Le message a bien été envoyé.";
+            if (ModelState.IsValid && newContact.SujetMessage != null && newContact.Message != null)
+                ViewBag.Valid = "Le message a bien été envoyé.";
             return View("Contact", newContact);
         }
 

@@ -1,5 +1,4 @@
 ﻿declare @destination as table(
-     id int,
      Nom NVARCHAR (100) , 
      Niveau TINYINT, 
      Description NVARCHAR (500) 

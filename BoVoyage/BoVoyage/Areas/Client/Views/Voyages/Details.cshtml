@@ -19,7 +19,8 @@
         Transport et hébergement tout compris pour la somme de <strong>@Html.DisplayFor(modelItem => Model.PrixHt)</strong> (HT) par personne!
     </p>
     <p>Réservez vite! Il ne reste plus que <strong>@Model.PlacesDispo places disponibles!</strong> </p>
-    <a asp-action="Reserver" asp-route-id="" class="btn btn-primary"> Je réserve maintenant!</a>
+    <a asp-action="Reserver" asp-route-id="" class="btn btn-primary"> Je réserve maintenant!</a><br/>
+    <a asp-action="Index" asp-controller="Voyages"> Précédent </a>
 </div>
 
 

@@ -1,0 +1,25 @@
+﻿@model BoVoyage.Models.Voyage
+
+@{
+    string[] descriptionMinim = Model.Descriptif.Split(' ', 20);
+    descriptionMinim[descriptionMinim.Length - 1] = " ...";   
+}
+<div class="">
+    <div class="card m-3">
+        <img src="~/img/@Model.IdDestinationNavigation.Photo.First().NomFichier" class="card-img-top" alt="">
+        <div class="card-body">
+            <h3 class="card-title">@Model.IdDestinationNavigation.Nom</h3>
+            <p class="card-text">
+                Du <strong>@Html.DisplayFor(modelItem => Model.DateDepart) </strong>
+                au <strong>@Html.DisplayFor(modelItem => Model.DateRetour) </strong>
+            </p>
+            <p class="text-justify">@string.Join(' ', descriptionMinim)</p>
+            <div class="d-flex justify-content-center">
+                <a asp-action="Details" asp-route-id="" class="btn btn-secondary">En savoir plus</a>
+            </div>
+        </div>
+        <div class="card-footer">
+            <p class="text-center">Au prix de <span class="font-weight-bold">@Html.DisplayFor(modelItem => Model.PrixHt)</span>/personne</p>
+        </div>
+    </div>
+</div>

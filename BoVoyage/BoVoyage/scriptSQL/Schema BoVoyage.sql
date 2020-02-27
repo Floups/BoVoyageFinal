@@ -18,7 +18,7 @@ CREATE TABLE Destination
      IdParente INTEGER , 
      Nom NVARCHAR (100) NOT NULL , 
      Niveau TINYINT NOT NULL , 
-     Description NVARCHAR (500) 
+     Description NVARCHAR (1500) 
     )
 GO 
 
@@ -86,7 +86,7 @@ CREATE TABLE Voyage
      DateRetour DATE NOT NULL , 
      PlacesDispo INTEGER NOT NULL , 
      PrixHT DECIMAL (16,4) NOT NULL DEFAULT 0 , 
-     Reduction DECIMAL (3,2) NOT NULL , Descriptif Nvarchar(500) ) 
+     Reduction DECIMAL (3,2) NOT NULL , Descriptif Nvarchar(1500) ) 
 Go
 
 ALTER TABLE Voyage ADD Constraint Voyage_Pk PRIMARY KEY (Id)

@@ -21,7 +21,7 @@ namespace BoVoyage.Models
 
         public virtual Destination IdParenteNavigation { get; set; }
         public virtual ICollection<Destination> InverseIdParenteNavigation { get; set; }
-        [DataType(DataType.Upload)]
+        [DataType(DataType.ImageUrl)]
         public virtual ICollection<Photo> Photo { get; set; }
         public virtual ICollection<Voyage> Voyage { get; set; }
     }

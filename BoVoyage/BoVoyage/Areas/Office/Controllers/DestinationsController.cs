@@ -14,6 +14,7 @@ namespace BoVoyage.Areas.Office.Controllers
     [Area("Office")]
     public class DestinationsController : Controller
     {
+        private const string ROOT = "wwwroot/img/";
         private readonly BoVoyageContext _context;
 
         public DestinationsController(BoVoyageContext context)
@@ -48,8 +49,9 @@ namespace BoVoyage.Areas.Office.Controllers
         }
 
         // GET: Office/Destinations/Create
-        public IActionResult Create()
+        public IActionResult Create(bool voyage=false)
         {
+            ViewBag.voyage = voyage;
             ViewData["IdParente"] = new SelectList(_context.Destination, "Id", "Nom");
             return View();
         }
@@ -59,24 +61,28 @@ namespace BoVoyage.Areas.Office.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,IdParente,Nom,Niveau,Description,Photo")] Destination destination, List<IFormFile> photos)
+        public async Task<IActionResult> Create([Bind("Id,IdParente,Nom,Niveau,Description,Photo")] Destination destination, List<IFormFile> photos, bool voyage)
         {
             if (ModelState.IsValid)
             {
                 foreach (var photo in photos)
                 {
-                    if (photo.Length > 0)
+                    if (photo.Length > 0 && (photo.FileName.EndsWith(".png")) || (photo.FileName.EndsWith(".jpeg")) || (photo.FileName.EndsWith(".jpg")))
                     {
-                        using (var stream = System.IO.File.Create("wwwroot/img/" + photo.FileName))
+                        var myUniqueFileName = Convert.ToString(Guid.NewGuid());
+                        var FileExtension = Path.GetExtension(photo.FileName);
+                        using (var stream = System.IO.File.Create(ROOT + myUniqueFileName+FileExtension))
                         {
                             await photo.CopyToAsync(stream);
                         }
-                        var photoSql = new Photo() { IdDestination = destination.Id, NomFichier = photo.FileName };
+                        var photoSql = new Photo() { IdDestination = destination.Id, NomFichier = myUniqueFileName + FileExtension };
                         destination.Photo.Add(photoSql);
                     }
                 }
                 _context.Add(destination);
                 await _context.SaveChangesAsync();
+                if(voyage)
+                    return RedirectToAction("Create","Voyages",new { id=destination.Id});
                 return RedirectToAction(nameof(Index));
             }
             ViewData["IdParente"] = new SelectList(_context.Destination, "Id", "Nom", destination.IdParente);
@@ -161,7 +167,13 @@ namespace BoVoyage.Areas.Office.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var destination = await _context.Destination.Include(d=>d.Voyage).SingleOrDefaultAsync(d=>d.Id==id);
+            var destination = await _context.Destination.Include(d=>d.Voyage).Include(d=>d.Photo).SingleOrDefaultAsync(d=>d.Id==id);
+            foreach(var photo in destination.Photo)
+            {
+                if (System.IO.File.Exists(ROOT + photo.NomFichier))
+                    System.IO.File.Delete(ROOT + photo.NomFichier);
+                _context.Photo.Remove(photo);
+            }
             _context.Voyage.RemoveRange(destination.Voyage);
             _context.Destination.Remove(destination);
             await _context.SaveChangesAsync();

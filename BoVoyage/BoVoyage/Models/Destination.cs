@@ -9,7 +9,7 @@ namespace BoVoyage.Models
         public Destination()
         {
             InverseIdParenteNavigation = new HashSet<Destination>();
-            Photo = new HashSet<Photo>();
+            Photo = new List<Photo>();
             Voyage = new HashSet<Voyage>();
         }
 

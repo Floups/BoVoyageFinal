@@ -18,7 +18,7 @@ CREATE TABLE Destination
      IdParente INTEGER , 
      Nom NVARCHAR (100) NOT NULL , 
      Niveau TINYINT NOT NULL , 
-     Description NVARCHAR (500) 
+     Description NVARCHAR (1500) 
     )
 GO 
 

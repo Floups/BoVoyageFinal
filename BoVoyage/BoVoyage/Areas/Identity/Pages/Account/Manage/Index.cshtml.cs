@@ -21,7 +21,7 @@ namespace BoVoyage.Areas.Identity.Pages.Account.Manage
             _userManager = userManager;
             _signInManager = signInManager;
         }
-
+        [Display(Name ="Nom d'utilisateur")]
         public string Username { get; set; }
 
         [TempData]
@@ -33,7 +33,7 @@ namespace BoVoyage.Areas.Identity.Pages.Account.Manage
         public class InputModel
         {
             [Phone]
-            [Display(Name = "Phone number")]
+            [Display(Name = "Numéro de téléphone")]
             public string PhoneNumber { get; set; }
         }
 
@@ -55,7 +55,7 @@ namespace BoVoyage.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound($"Impossible de se connecter avec l'id utilisateur '{_userManager.GetUserId(User)}'.");
             }
 
             await LoadAsync(user);
@@ -67,7 +67,7 @@ namespace BoVoyage.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound($"Impossible de se connecter avec l'id utilisateur '{_userManager.GetUserId(User)}'.");
             }
 
             if (!ModelState.IsValid)
@@ -83,12 +83,12 @@ namespace BoVoyage.Areas.Identity.Pages.Account.Manage
                 if (!setPhoneResult.Succeeded)
                 {
                     var userId = await _userManager.GetUserIdAsync(user);
-                    throw new InvalidOperationException($"Unexpected error occurred setting phone number for user with ID '{userId}'.");
+                    throw new InvalidOperationException($"Une erreur inattendu a eu lieu lors de la mise à jour du téléphone pour l'utilisateur id = '{userId}'.");
                 }
             }
 
             await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "Your profile has been updated";
+            StatusMessage = "Votre profil a été mis à jour.";
             return RedirectToPage();
         }
     }

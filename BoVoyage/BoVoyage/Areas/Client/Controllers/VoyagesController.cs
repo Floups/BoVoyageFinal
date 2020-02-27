@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BoVoyage.Models;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace BoVoyage.Areas.Client.Controllers
 {
@@ -20,9 +21,42 @@ namespace BoVoyage.Areas.Client.Controllers
         }
 
         // GET: Client/Voyages
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? dest, decimal prixMin, decimal prixMax,DateTime dateMin, DateTime dateMax)
         {
-            var listeVoyages = await _context.Voyage.Include(v=>v.IdDestinationNavigation).ThenInclude(d => d.Photo).ToListAsync();
+            var listeDestinations = await _context.Destination.ToListAsync();
+            ViewBag.Destinations = new SelectList(listeDestinations, "Id", "Nom",dest);
+            ViewBag.PrixMin = prixMin;
+            ViewBag.PrixMax = prixMax;
+            
+            IQueryable<Voyage> voyages = _context.Voyage.Include(v => v.IdDestinationNavigation).ThenInclude(d => d.Photo);
+            
+            if (dest != null && dest!=0)
+                voyages = voyages.Where(v => v.IdDestinationNavigation.Id == dest);
+            if (prixMin != 0 && prixMax == 0)
+                voyages = voyages.Where(v => v.PrixHt >= prixMin);
+            if (prixMin == 0 && prixMax != 0)
+                voyages = voyages.Where(v => v.PrixHt <= prixMax);
+            if (prixMin != 0 && prixMax != 0)
+                voyages =  voyages.Where(v => v.PrixHt >= prixMin && v.PrixHt <= prixMax);
+            if (dateMin != DateTime.MinValue && dateMax == DateTime.MinValue)
+            {
+                ViewBag.DateMin = dateMin.ToString("yyyy-MM-dd");
+                voyages = voyages.Where(v => v.DateDepart >= dateMin);
+            }
+            if (dateMin == DateTime.MinValue && dateMax != DateTime.MinValue)
+            {
+                ViewBag.DateMax = dateMax.ToString("yyyy-MM-dd");
+                voyages = voyages.Where(v => v.DateDepart <= dateMax);
+            }
+            if (dateMin != DateTime.MinValue && dateMax != DateTime.MinValue)
+            {
+                ViewBag.DateMin = dateMin.ToString("yyyy-MM-dd");
+                ViewBag.DateMax = dateMax.ToString("yyyy-MM-dd");
+                voyages = voyages.Where(v => v.DateDepart >= dateMin && v.DateDepart <= dateMax);
+            }
+
+
+            var listeVoyages = await voyages.ToListAsync();
             var photos = new Dictionary<int, string>();
             foreach (var item in listeVoyages)
             {
@@ -40,7 +74,6 @@ namespace BoVoyage.Areas.Client.Controllers
 
                 }
             }
-
             ViewBag.Photos = photos;
 
             return View(listeVoyages);

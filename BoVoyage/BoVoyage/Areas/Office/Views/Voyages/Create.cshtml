@@ -15,6 +15,7 @@
             <div class="form-group">
                 <label asp-for="IdDestination" class="control-label"></label>
                 <select asp-for="IdDestination" class ="form-control" asp-items="ViewBag.IdDestination"></select>
+                <a class="btn btn-primary" asp-area="Office" asp-controller="Destinations" asp-action="Create" asp-route-voyage="true">Créer Destination</a>
             </div>
             <div class="form-group">
                 <label asp-for="DateDepart" class="control-label"></label>

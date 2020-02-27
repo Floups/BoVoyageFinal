@@ -28,9 +28,9 @@ namespace BoVoyage.Areas.Identity.Pages.Account.Manage
             _signInManager = signInManager;
             _emailSender = emailSender;
         }
-
+        [Display (Name = "Nom utilisateur")]
         public string Username { get; set; }
-
+        [Display(Name ="Adresse e-mail")]
         public string Email { get; set; }
 
         public bool IsEmailConfirmed { get; set; }
@@ -45,7 +45,7 @@ namespace BoVoyage.Areas.Identity.Pages.Account.Manage
         {
             [Required]
             [EmailAddress]
-            [Display(Name = "New email")]
+            [Display(Name = "Nouvel adresse e-mail")]
             public string NewEmail { get; set; }
         }
 
@@ -67,7 +67,7 @@ namespace BoVoyage.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound($"Impossible de se connecter avec l'id utilisateur '{_userManager.GetUserId(User)}'.");
             }
 
             await LoadAsync(user);
@@ -79,7 +79,7 @@ namespace BoVoyage.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound($"Impossible de se connecter avec l'id utilisateur '{_userManager.GetUserId(User)}'.");
             }
 
             if (!ModelState.IsValid)
@@ -100,14 +100,14 @@ namespace BoVoyage.Areas.Identity.Pages.Account.Manage
                     protocol: Request.Scheme);
                 await _emailSender.SendEmailAsync(
                     Input.NewEmail,
-                    "Confirm your email",
-                    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    "Confirmer votre e-mail",
+                    $"Veuillez confirmer votre e-mail en cliquant <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>ici</a>.");
 
-                StatusMessage = "Confirmation link to change email sent. Please check your email.";
+                StatusMessage = "Lien de confirmation envoyé. Veuillez vérifier votre boîte e-mails.";
                 return RedirectToPage();
             }
 
-            StatusMessage = "Your email is unchanged.";
+            StatusMessage = "Votre e-mail n'a pas été changé.";
             return RedirectToPage();
         }
 
@@ -116,7 +116,7 @@ namespace BoVoyage.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound($"Impossible de se connecter avec l'id utilisateur '{_userManager.GetUserId(User)}'.");
             }
 
             if (!ModelState.IsValid)
@@ -136,10 +136,10 @@ namespace BoVoyage.Areas.Identity.Pages.Account.Manage
                 protocol: Request.Scheme);
             await _emailSender.SendEmailAsync(
                 email,
-                "Confirm your email",
-                $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                "Confirmer votre e-mail",
+                $"Veuiller confirmer votre comptre en cliquant <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>ici</a>.");
 
-            StatusMessage = "Verification email sent. Please check your email.";
+            StatusMessage = "Message de confirmation envoyé. Veuillez confirmer votre boîte e-mails.";
             return RedirectToPage();
         }
     }

@@ -32,6 +32,7 @@ namespace BoVoyage.Areas.Identity.Pages.Account
         {
             [Required]
             [EmailAddress]
+            [Display (Name ="Adresse e-mail")]
             public string Email { get; set; }
         }
 
@@ -58,8 +59,8 @@ namespace BoVoyage.Areas.Identity.Pages.Account
 
                 await _emailSender.SendEmailAsync(
                     Input.Email,
-                    "Reset Password",
-                    $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    "Modifier mot de passe",
+                    $"Merci de modifier votre mot de passe en cliquant <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>ici</a>.");
 
                 return RedirectToPage("./ForgotPasswordConfirmation");
             }

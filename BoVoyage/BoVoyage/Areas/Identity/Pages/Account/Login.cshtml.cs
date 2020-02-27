@@ -42,12 +42,12 @@ namespace BoVoyage.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
+            [Required(ErrorMessage = "Champ requis")]
             [EmailAddress]
             [Display(Name ="Adresse e-mail")]
             public string Email { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "Champ requis")]
             [Display(Name ="Mot de passe")]
             [DataType(DataType.Password)]
             public string Password { get; set; }

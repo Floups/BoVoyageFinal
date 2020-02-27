@@ -27,12 +27,12 @@ namespace BoVoyage.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
+            [Required(ErrorMessage = "Champ requis")]
             [EmailAddress]
             [Display(Name ="Adresse e-mail")]
             public string Email { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "Champ requis")]
             [StringLength(100, ErrorMessage = "Le {0} doit avoir au moins {2} et au maximum {1} caractères.", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name ="Mot de passe")]

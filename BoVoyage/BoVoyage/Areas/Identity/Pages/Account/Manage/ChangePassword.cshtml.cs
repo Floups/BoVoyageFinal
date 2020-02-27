@@ -33,12 +33,12 @@ namespace BoVoyage.Areas.Identity.Pages.Account.Manage
 
         public class InputModel
         {
-            [Required]
+            [Required(ErrorMessage = "Champ requis")]
             [DataType(DataType.Password)]
             [Display(Name = "Mot de passe courant")]
             public string OldPassword { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "Champ requis")]
             [StringLength(100, ErrorMessage = "Le {0} doit faire entre {2} et {1} caractères.", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Nouveau mot de passe")]

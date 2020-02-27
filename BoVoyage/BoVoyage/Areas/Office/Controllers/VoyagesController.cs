@@ -20,10 +20,42 @@ namespace BoVoyage.Areas.Office.Controllers
         }
 
         // GET: Office/Voyages
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? dest, decimal prixMin, decimal prixMax, DateTime dateMin, DateTime dateMax)
         {
-            var boVoyageContext = _context.Voyage.Include(v => v.IdDestinationNavigation);
-            return View(await boVoyageContext.ToListAsync());
+            var listeDestinations = await _context.Destination.ToListAsync();
+            ViewBag.Destinations = new SelectList(listeDestinations, "Id", "Nom", dest);
+            ViewBag.PrixMin = prixMin;
+            ViewBag.PrixMax = prixMax;
+
+            IQueryable<Voyage> voyages = _context.Voyage.Include(v => v.IdDestinationNavigation);
+
+            if (dest != null && dest != 0)
+                voyages = voyages.Where(v => v.IdDestinationNavigation.Id == dest);
+            if (prixMin != 0 && prixMax == 0)
+                voyages = voyages.Where(v => v.PrixHt >= prixMin);
+            if (prixMin == 0 && prixMax != 0)
+                voyages = voyages.Where(v => v.PrixHt <= prixMax);
+            if (prixMin != 0 && prixMax != 0)
+                voyages = voyages.Where(v => v.PrixHt >= prixMin && v.PrixHt <= prixMax);
+            if (dateMin != DateTime.MinValue && dateMax == DateTime.MinValue)
+            {
+                ViewBag.DateMin = dateMin.ToString("yyyy-MM-dd");
+                voyages = voyages.Where(v => v.DateDepart >= dateMin);
+            }
+            if (dateMin == DateTime.MinValue && dateMax != DateTime.MinValue)
+            {
+                ViewBag.DateMax = dateMax.ToString("yyyy-MM-dd");
+                voyages = voyages.Where(v => v.DateDepart <= dateMax);
+            }
+            if (dateMin != DateTime.MinValue && dateMax != DateTime.MinValue)
+            {
+                ViewBag.DateMin = dateMin.ToString("yyyy-MM-dd");
+                ViewBag.DateMax = dateMax.ToString("yyyy-MM-dd");
+                voyages = voyages.Where(v => v.DateDepart >= dateMin && v.DateDepart <= dateMax);
+            }
+            var boVoyageContext = await voyages.ToListAsync();
+
+            return View( boVoyageContext);
         }
 
         // GET: Office/Voyages/Details/5

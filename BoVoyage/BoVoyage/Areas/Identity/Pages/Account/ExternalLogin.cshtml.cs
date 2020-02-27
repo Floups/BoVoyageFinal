@@ -48,7 +48,8 @@ namespace BoVoyage.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
+            [Required(ErrorMessage = "Champ requis")]
+            [Display(Name ="Adresse e-mail")]
             [EmailAddress]
             public string Email { get; set; }
         }

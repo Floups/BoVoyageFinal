@@ -46,9 +46,9 @@ namespace BoVoyage.Areas.Office.Controllers
         }
 
         // GET: Office/Voyages/Create
-        public IActionResult Create()
+        public IActionResult Create(int id)
         {
-            ViewData["IdDestination"] = new SelectList(_context.Destination, "Id", "Nom");
+            ViewData["IdDestination"] = new SelectList(_context.Destination, "Id", "Nom", id);
             return View();
         }
 

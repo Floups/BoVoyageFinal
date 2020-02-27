@@ -10,13 +10,13 @@ namespace BoVoyage.Areas.Identity.Pages.Account.Manage
     {
         public static string Index => "Index";
 
-        public static string Email => "Email";
+        public static string Email => "Adresse e-mail";
 
-        public static string ChangePassword => "ChangePassword";
+        public static string ChangePassword => "Changer mot de passe";
 
         public static string ExternalLogins => "ExternalLogins";
 
-        public static string PersonalData => "PersonalData";
+        public static string PersonalData => "Données personnelles";
 
         public static string TwoFactorAuthentication => "TwoFactorAuthentication";
 

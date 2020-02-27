@@ -39,7 +39,7 @@ namespace BoVoyage.Areas.Identity.Pages.Account
 
             code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
             var result = await _userManager.ConfirmEmailAsync(user, code);
-            StatusMessage = result.Succeeded ? "Merci d'avoir confirmer votre adresse e-mail" : "Erreur lors de la confirmation de l'adresse e-mail.";
+            StatusMessage = result.Succeeded ? "Votre mail a bien été confirmé." : "Une erreur est survenue lors de la confirmation de votre adresse e-mail.";
             return Page();
         }
     }

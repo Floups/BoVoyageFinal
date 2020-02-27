@@ -19,7 +19,7 @@ namespace BoVoyage.Models
         public string Prenom { get; set; }
        
         [Required(ErrorMessage = "Champ requis."),
-            RegularExpression("^[a-z0-9_\\+-]+(\\.[a-z0-9_\\+-]+)*@[a-z0-9-]+(\\.[a-z0-9]+)*\\.([a-z]{2,4})$", ErrorMessage ="Format de l'adresse e-mail incorrecte."),
+            RegularExpression("^[a-z0-9_\\+-]+(\\.[a-z0-9_\\+-]+)*@[a-z0-9-]+(\\.[a-z0-9]+)*\\.([a-z]{2,4})$", ErrorMessage ="Format de l'adresse e-mail incorrect."),
             Display(Name = "Adresse e-mail")]
         public string Email { get; set; }
 

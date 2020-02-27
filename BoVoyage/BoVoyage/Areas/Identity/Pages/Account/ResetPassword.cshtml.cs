@@ -29,16 +29,18 @@ namespace BoVoyage.Areas.Identity.Pages.Account
         {
             [Required]
             [EmailAddress]
+            [Display(Name ="Adresse e-mail")]
             public string Email { get; set; }
 
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(100, ErrorMessage = "Le {0} doit avoir au moins {2} et au maximum {1} caractères.", MinimumLength = 6)]
             [DataType(DataType.Password)]
+            [Display(Name ="Mot de passe")]
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Display(Name = "Confirmer mot de passe")]
+            [Compare("Password", ErrorMessage = "La confirmation du mot de passe ne correspond pas au mot de passe.")]
             public string ConfirmPassword { get; set; }
 
             public string Code { get; set; }

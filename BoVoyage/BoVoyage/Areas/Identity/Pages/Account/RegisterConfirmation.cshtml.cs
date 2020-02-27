@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using System.ComponentModel.DataAnnotations;
 
 namespace BoVoyage.Areas.Identity.Pages.Account
 {
@@ -20,7 +21,7 @@ namespace BoVoyage.Areas.Identity.Pages.Account
             _userManager = userManager;
             _sender = sender;
         }
-
+        [Display (Name="Adresse e-mail")]
         public string Email { get; set; }
 
         public bool DisplayConfirmAccountLink { get; set; }
@@ -37,7 +38,7 @@ namespace BoVoyage.Areas.Identity.Pages.Account
             var user = await _userManager.FindByEmailAsync(email);
             if (user == null)
             {
-                return NotFound($"Unable to load user with email '{email}'.");
+                return NotFound($"Impossible de se connecter avec l'adresse  '{email}'.");
             }
 
             Email = email;

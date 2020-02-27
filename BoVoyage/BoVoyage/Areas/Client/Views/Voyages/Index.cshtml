@@ -1,0 +1,79 @@
+﻿@model IEnumerable<BoVoyage.Models.Voyage>
+
+@{
+    ViewData["Title"] = "Nos Voyages";
+}
+<div class="row mb-3">
+    <div class="col-12">
+        <h1 class="text-center">Nos Voyages</h1>
+    </div>
+</div>
+
+
+<div class="row justify-content-center">
+
+    <form asp-controller="Voyages" asp-action="Index" method="get">
+        <label>Destination</label>
+        <div>
+            <select name="dest" asp-items="@ViewBag.Destinations">
+                <option value="0" selected>Aucun</option>
+            </select>
+        </div>
+
+
+        <label>Fourchette de prix</label>
+        <div class="input-group mb-3">
+            <input class="form-control" name="prixMin" min="0" placeholder="Prix Min" value="@ViewBag.PrixMin" />
+            <div class="input-group-append">
+                <span class="input-group-text">€</span>
+            </div>
+        </div>
+        <div class="input-group mb-3">
+            <input class="form-control" name="prixMax" min="0" placeholder="Prix Max" value="@ViewBag.PrixMax" />
+            <div class="input-group-append">
+                <span class="input-group-text">€</span>
+            </div>
+        </div>
+
+        <label>Fourchette de date de départ</label>
+        <input class="form-control input-group mb-3" type="date" name="dateMin" value="@ViewBag.DateMin" />
+        <input class="form-control input-group mb-3" type="date" name="dateMax" value="@ViewBag.DateMax" />
+
+        <button class="btn btn-primary" type="submit">Filtrer</button> 
+        <a class="btn btn-primary" asp-action="Index"> Effacer filtre </a>
+    </form>
+
+        <div class="col-md-10">
+            <div class="card-columns">
+
+                @foreach (var voyage in Model)
+
+                {
+                    @if (voyage.PlacesDispo != 0)
+                    {<div class="card">
+                            <img src="/img/@ViewBag.Photos[voyage.IdDestination]" class="card-img-top" alt="@Html.DisplayFor(modelItem => voyage.IdDestinationNavigation.Nom)">
+                            <div class="card-body">
+                                <h3 class="card-title">@Html.DisplayFor(modelItem => voyage.IdDestinationNavigation.Nom)</h3>
+                                <p class="card-text">
+                                    Du <strong>@Html.DisplayFor(modelItem => voyage.DateDepart) </strong>
+                                    au <strong>@Html.DisplayFor(modelItem => voyage.DateRetour) </strong>
+                                </p>
+                                <p>@Html.DisplayFor(modelItem => voyage.Descriptif)</p>
+                                <div class="d-flex justify-content-center">
+
+                                    <a asp-action="Details" asp-route-id="@voyage.Id" class="btn btn-secondary">En savoir plus</a>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <p class="text-center">Au prix de <span class="font-weight-bold">@Html.DisplayFor(modelItem => voyage.PrixHt)</span>/personne</p>
+                            </div>
+                        </div>}
+
+                }
+            </div>
+
+        </div>
+
+    @if (!Model.Any())
+    {<p>Désolé. Aucun voyage ne correspond à votre recherche.</p>}
+</div>

@@ -40,6 +40,7 @@ namespace BoVoyage.Controllers
         public async Task<IActionResult> Create([Bind("Civilite", "Nom", "Prenom", "Telephone", "Email", "SujetMessage", "Message")] ContactViewModel newContact)
         {
             var pers = _context.Personne.Where(p => p.Email == newContact.Email).FirstOrDefault();
+            
             if (pers == null)
             {
                 Personne personne = new Personne()
@@ -59,7 +60,7 @@ namespace BoVoyage.Controllers
                     //return RedirectToAction(nameof(Contact));
                 }
             }
-
+            if(ModelState.IsValid && newContact.SujetMessage!=null && newContact.Message!=null)
             ViewBag.Valid = "Le message a bien été envoyé.";
             return View("Contact", newContact);
         }

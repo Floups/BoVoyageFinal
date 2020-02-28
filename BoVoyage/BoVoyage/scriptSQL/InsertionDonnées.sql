@@ -5,40 +5,6 @@
      Description NVARCHAR (1500) 
 )
 
-declare @voyage as table(
-     IdDestination INTEGER , 
-     DateDepart DATE , 
-     DateRetour DATE , 
-     PlacesDispo INTEGER , 
-     PrixHT DECIMAL (16,4) DEFAULT 0 , 
-     Reduction DECIMAL (3,2) , 
-     Descriptif Nvarchar(1500)
-)
-
-declare @photos as table(
-     NomFichier NVARCHAR(100),
-     IdDestination INT
-)
-
-declare @personne as table(
-TypePers int,
-Civilite nvarchar(100),
-Nom nvarchar(100),
-Prenom nvarchar(100),
-Email nvarchar(100),
-Telephone varchar(100),
-Datenaissance Date
-)
-
-insert @personne values
-(1,'Mr','Dupont', 'Jean','jd@msn.com','0123456789','1991-01-01'),
-(2,'Mme','Dupont','Jeanette','j-d@msn.com','0123456789','1991-01-01'),
-(3,'Mr','Smith','Jonh','js@gmail.com','0123456789','1991-01-01'),
-(4,'Mme','Smith','Jane','j-s@gmail.com','0123456789','1991-01-01')
-
-insert Personne select * from @personne
-
-
 insert @destination values
 (null, 'France', 2, 'La France, pays de l''Europe occidentale, compte des villes médiévales, des villages alpins et des plages. Paris, sa capitale, est célèbre pour ses maisons de mode, ses musées d''art classique, dont celui du Louvre, et ses monuments comme la Tour Eiffel. Le pays est également réputé pour ses vins et sa cuisine raffinée. Les peintures rupestres des grottes de Lascaux, le théâtre romain de Lyon et l''immense château de Versailles témoignent de sa riche histoire.'),
 (1, 'Guadeloupe', 3,'Dans un site exceptionnel, en bordure d''un petit lagon turquoise, tout est réuni pour un séjour paradisiaque. Découvrez les merveilles de grande terre et de basse terre, les joies des plongées dans la réserve naturelle.'),
@@ -52,6 +18,15 @@ insert @destination values
 
 
 
+declare @voyage as table(
+     IdDestination INTEGER , 
+     DateDepart DATE , 
+     DateRetour DATE , 
+     PlacesDispo INTEGER , 
+     PrixHT DECIMAL (16,4) DEFAULT 0 , 
+     Reduction DECIMAL (3,2) , 
+     Descriptif Nvarchar(1500)
+)
 
 insert @voyage values
 (2,GETDATE(),DATEADD(day,12,GETDATE()),4,100,0.20,'La résidence Caraïbes Royal privilégie concept de « vacances à la maison » offre une totale indépendance tout en vous apportant des services hôteliers attentionnés et sur-mesure, pour des vacances en famille inoubliables.'),
@@ -75,7 +50,10 @@ insert @voyage values
 
 
 
-
+declare @photos as table(
+     NomFichier NVARCHAR(100),
+     IdDestination INT
+)
 
 insert @photos values
 ('guadeloupe_1.jpg', 2),
@@ -94,8 +72,37 @@ insert @photos values
 ('vietnam_1.jpg', 9),
 ('vietnam_2.png', 9)
 
+declare @personne as table(
+TypePers int,
+Civilite nvarchar(100),
+Nom nvarchar(100),
+Prenom nvarchar(100),
+Email nvarchar(100),
+Telephone varchar(100),
+Datenaissance Date
+)
+
+insert @personne values
+(1,'Mr','Dupont', 'Jean','jd@msn.com','0123456789','1991-01-01'),
+(2,'Mme','Dupont','Jeanette','j-d@msn.com','0123456789','1991-01-01'),
+(3,'Mr','Smith','Jonh','js@gmail.com','0123456789','1991-01-01'),
+(4,'Mme','Smith','Jane','j-s@gmail.com','0123456789','1991-01-01')
 
 
+declare @etatDossier as table(
+Id int,
+Libelle nvarchar(30)
+)
+
+insert @etatDossier values
+(1,'en attente'),
+(2,'en cours'),
+(3,'refusé'),
+(4,'accepté')
+
+insert Etatdossier select * from @etatDossier
+
+insert Personne select * from @personne
 
 insert Destination select * from @destination
 

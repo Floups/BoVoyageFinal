@@ -59,6 +59,19 @@ namespace BoVoyage
                 options.User.RequireUniqueEmail = true;
             });
 
+            // Mise en place des sessions au moyen d'un cache mémoire
+            services.AddDistributedMemoryCache();
+            services.AddSession(options =>
+            {
+                // Définit la durée maxi d'inactivité de la session
+                options.IdleTimeout = TimeSpan.FromMinutes(5);
+
+                // Active le cookie de session et le rend obligatoire
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -77,6 +90,7 @@ namespace BoVoyage
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseSession();
 
             app.UseRouting();
 

@@ -15,52 +15,58 @@
             <div class="card-body">
                 <section class="voyageur">
                     <h5 class="card-title">Vous</h5>
+                    <div class="form-group">
+                        <label class="control-label"></label>
+                        <input value="@ViewBag.Utilisateur.Nom" class="form-control" disabled />
+                    </div>
+                    <p>Pour modifier vos informations veuillez vous diriger vers votre <a href="#">espace personnel<a /></p>
                 </section>
-                @for (int i = 0; i < Model.Voyageurs.Count(); i++)
-                {
-            <section class="voyageur">
-                <h5 class="card-title">Accompagnant : @i</h5>
-                <form asp-action="AjoutVoyageur">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="form-group">
-                        <label asp-for="Voyageurs[i].Civilite" class="control-label"></label>
-                        <select asp-for="Voyageurs[i].Civilite" class="form-control mr-sm-2 mb-2">
-                            <option value="Mr">Monsieur</option>
-                            <option value="Mme">Madame</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Voyageurs[i].Nom" class="control-label"></label>
-                        <input asp-for="Voyageurs[i].Nom" class="form-control" />
-                        <span asp-validation-for="Voyageurs[i].Nom" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Voyageurs[i].Prenom" class="control-label"></label>
-                        <input asp-for="Voyageurs[i].Prenom" class="form-control" />
-                        <span asp-validation-for="Voyageurs[i].Prenom" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Voyageurs[i].Datenaissance" class="control-label"></label>
-                        <input asp-for="Voyageurs[i].Datenaissance" class="form-control" />
-                        <span asp-validation-for="Voyageurs[i].Datenaissance" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Voyageurs[i].Email" class="control-label"></label>
-                        <input asp-for="Voyageurs[i].Email" class="form-control" />
-                        <span asp-validation-for="Voyageurs[i].Email" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Voyageurs[i].Telephone" class="control-label"></label>
-                        <input asp-for="Voyageurs[i].Telephone" class="form-control" />
-                        <span asp-validation-for="Voyageurs[i].Telephone" class="text-danger"></span>
-                    </div>            
-                    <div class="form-group">
-                        <input type="submit" value="Create" class="btn btn-primary" />
-                    </div>
-                </form>
-            </section>
-                }        
-                <a asp-action="Index" asp-route-idVoyage="@Model.Voyage.Id" asp-route-nbPersonnes="@(Model.Voyageurs.Count()+1)" class="btn btn-primary">Ajouter un Voyageur</a>
+                <section class="voyageur">
+                    <form asp-action="AjoutVoyageur" asp-route-IdVoyage="@Model.Voyage.Id" asp-route-nbPersonnes="@Model.Voyageurs.Count()">
+                        @for (int i = 0; i < Model.Voyageurs.Count(); i++)
+                        {
+                            <h5 class="card-title">Accompagnant : @(i + 1)</h5>
+
+                            <div class="form-group">
+                                <label asp-for="Voyageurs[i].Civilite" class="control-label"></label>
+                                <select asp-for="Voyageurs[i].Civilite" class="form-control mr-sm-2 mb-2">
+                                    <option value="Mr">Monsieur</option>
+                                    <option value="Mme">Madame</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Voyageurs[i].Nom" class="control-label"></label>
+                                <input asp-for="Voyageurs[i].Nom" class="form-control" />
+                                <span asp-validation-for="Voyageurs[i].Nom" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Voyageurs[i].Prenom" class="control-label"></label>
+                                <input asp-for="Voyageurs[i].Prenom" class="form-control" />
+                                <span asp-validation-for="Voyageurs[i].Prenom" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Voyageurs[i].Datenaissance" class="control-label"></label>
+                                <input asp-for="Voyageurs[i].Datenaissance" class="form-control" />
+                                <span asp-validation-for="Voyageurs[i].Datenaissance" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Voyageurs[i].Email" class="control-label"></label>
+                                <input asp-for="Voyageurs[i].Email" class="form-control" />
+                                <span asp-validation-for="Voyageurs[i].Email" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Voyageurs[i].Telephone" class="control-label"></label>
+                                <input asp-for="Voyageurs[i].Telephone" class="form-control" />
+                                <span asp-validation-for="Voyageurs[i].Telephone" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Valider" class="btn btn-success" />
+                                <a asp-action="SupprimerVoyageur" asp-route-idVoyageur="@i" asp-route-idVoyage="@Model.Voyage.Id" asp-route-nbPersonnes="@Model.Voyageurs.Count()" type="button" class="btn btn-danger">Supprimer</a>
+                            </div>
+                        }
+                    </form>
+                </section>
+                <a asp-action="Index" asp-route-idVoyage="@Model.Voyage.Id" asp-route-nbPersonnes="@(Model.Voyageurs.Count() + 1)" class="btn btn-primary">Ajouter un Voyageur</a>
             </div>
         </div>
     </div>
@@ -86,28 +92,28 @@
                         </tr>
                     </thead>
                     <tbody>
+
                         <tr>
-                            <td scope="row">Nom 1</td>
-                            <td>@Model.Voyage.PrixHt</td>
+                            <td scope="row">@ViewBag.Utilisateur.Nom</td>
+                            <td>@((double)Model.Voyage.PrixHt)</td>
                         </tr>
+                        @for (int i = 0; i < ViewBag.PrixParVoyageur.Count; i++)
+                        {
+                            <tr>
+                                <td scope="row">@Model.Voyageurs[i].Nom</td>
+                                <td>@ViewBag.PrixParVoyageur[i]</td>
+                            </tr>
+                        }                       
                         <tr>
-                            <td scope="row">Nom 2</td>
-                            <td>@Model.Voyage.PrixHt</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Total HT</th>
-                            <td>@Model.Voyage.PrixHt</td>
+                            <th scope="row"></th>
+                            <th>TOTAL avec TVA (20%)</th>
                         </tr>
                         <tr>
                             <th scope="row"></th>
-                            <th>TOTAL TVA (20%)</th>
-                        </tr>
-                        <tr>
-                            <th scope="row"></th>
-                            <th>XXXX €</th>
+                            <th>@ViewBag.PrixTva €</th>
                         </tr>
                     </tbody>
-                </table>     
+                </table>
                 <p class="card-text"></p>
                 <a href="#" class="btn btn-primary">Paiement</a>
             </div>

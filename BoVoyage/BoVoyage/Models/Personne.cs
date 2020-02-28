@@ -23,6 +23,7 @@ namespace BoVoyage.Models
         public string Email { get; set; }
         [Phone]
         public string Telephone { get; set; }
+        [DataType(DataType.Date)]
         public DateTime? Datenaissance { get; set; }
 
         public virtual Client Client { get; set; }

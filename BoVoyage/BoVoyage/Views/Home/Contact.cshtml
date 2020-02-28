@@ -63,16 +63,14 @@
         </form>
     </div>}
 
-@if(ViewBag.Valid!=null)
-    {
-<div class="card" >
-    <p><strong>Sujet</strong></p>
-    <p>@Model.SujetMessage</p>
-    <p><strong>Message</strong></p>
-    <p>@Model.Message</p>
-</div>
+@if (ViewBag.Valid != null)
+{
+    <div class="card">
+        <p><strong>Sujet</strong></p>
+        <p>@Model.SujetMessage</p>
+        <p><strong>Message</strong></p>
+        <p>@Model.Message</p>
+    </div>
     @ViewBag.Valid
-  
+
 }
-
-

@@ -8,10 +8,12 @@ using Microsoft.EntityFrameworkCore;
 using BoVoyage.Models;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BoVoyage.Areas.Office.Controllers
 {
     [Area("Office")]
+    [Authorize(Roles = "Admin, Manager")]
     public class DestinationsController : Controller
     {
         private const string ROOT = "wwwroot/img/";

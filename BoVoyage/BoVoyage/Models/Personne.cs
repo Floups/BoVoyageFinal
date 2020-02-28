@@ -15,6 +15,12 @@ namespace BoVoyage.Models
         }
         [XmlIgnore]
         public int Id { get; set; }
+        /// <summary>
+        /// 1: client (forcément utilisateur)
+        /// 2: voyageur
+        /// 3: contact
+        /// 4: utilisateur
+        /// </summary>
 
         [XmlIgnore]
         [Display (Name = "Catégorie de personne")]

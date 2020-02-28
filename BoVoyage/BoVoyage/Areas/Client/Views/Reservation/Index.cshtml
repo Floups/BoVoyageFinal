@@ -1,0 +1,116 @@
+﻿@model BoVoyage.Areas.Client.Models.VoyagePersonnesViewModel
+
+@{
+    ViewData["Title"] = "Réservation";
+}
+
+<h1>Réservation</h1>
+<div class="row">
+    <div class="col-6">
+
+        <div class="card">
+            <div class="card-header">
+                <h2>Voyageur(s)</h2>
+            </div>
+            <div class="card-body">
+                <section class="voyageur">
+                    <h5 class="card-title">Vous</h5>
+                </section>
+                @for (int i = 0; i < Model.Voyageurs.Count(); i++)
+                {
+            <section class="voyageur">
+                <h5 class="card-title">Accompagnant : @i</h5>
+                <form asp-action="AjoutVoyageur">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Voyageurs[i].Civilite" class="control-label"></label>
+                        <select asp-for="Voyageurs[i].Civilite" class="form-control mr-sm-2 mb-2">
+                            <option value="Mr">Monsieur</option>
+                            <option value="Mme">Madame</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Voyageurs[i].Nom" class="control-label"></label>
+                        <input asp-for="Voyageurs[i].Nom" class="form-control" />
+                        <span asp-validation-for="Voyageurs[i].Nom" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Voyageurs[i].Prenom" class="control-label"></label>
+                        <input asp-for="Voyageurs[i].Prenom" class="form-control" />
+                        <span asp-validation-for="Voyageurs[i].Prenom" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Voyageurs[i].Datenaissance" class="control-label"></label>
+                        <input asp-for="Voyageurs[i].Datenaissance" class="form-control" />
+                        <span asp-validation-for="Voyageurs[i].Datenaissance" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Voyageurs[i].Email" class="control-label"></label>
+                        <input asp-for="Voyageurs[i].Email" class="form-control" />
+                        <span asp-validation-for="Voyageurs[i].Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Voyageurs[i].Telephone" class="control-label"></label>
+                        <input asp-for="Voyageurs[i].Telephone" class="form-control" />
+                        <span asp-validation-for="Voyageurs[i].Telephone" class="text-danger"></span>
+                    </div>            
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-primary" />
+                    </div>
+                </form>
+            </section>
+                }        
+                <a asp-action="Index" asp-route-idVoyage="@Model.Voyage.Id" asp-route-nbPersonnes="@(Model.Voyageurs.Count()+1)" class="btn btn-primary">Ajouter un Voyageur</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-6">
+
+        <div class="card">
+            <div class="card-header">
+                <h2>Votre Voyage</h2>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Résumé</h5>
+                <ul>
+                    <li><span class="font-weight-bold">Destination : </span>@Model.Voyage.IdDestinationNavigation.Nom</li>
+                    <li><span class="font-weight-bold">Date Départ : </span>@Html.DisplayFor(m => Model.Voyage.DateDepart)</li>
+                    <li><span class="font-weight-bold">Date Retour : </span>@Html.DisplayFor(m => Model.Voyage.DateRetour)</li>
+                </ul>
+                <h5 class="card-title">Prix</h5>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Voyageur</th>
+                            <th scope="col">Prix HT (€)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td scope="row">Nom 1</td>
+                            <td>@Model.Voyage.PrixHt</td>
+                        </tr>
+                        <tr>
+                            <td scope="row">Nom 2</td>
+                            <td>@Model.Voyage.PrixHt</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Total HT</th>
+                            <td>@Model.Voyage.PrixHt</td>
+                        </tr>
+                        <tr>
+                            <th scope="row"></th>
+                            <th>TOTAL TVA (20%)</th>
+                        </tr>
+                        <tr>
+                            <th scope="row"></th>
+                            <th>XXXX €</th>
+                        </tr>
+                    </tbody>
+                </table>     
+                <p class="card-text"></p>
+                <a href="#" class="btn btn-primary">Paiement</a>
+            </div>
+        </div>
+    </div>
+</div>

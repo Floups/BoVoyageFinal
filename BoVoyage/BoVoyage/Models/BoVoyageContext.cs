@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using BoVoyage.Areas.Client.Models;
 
 namespace BoVoyage.Models
 {
@@ -171,5 +172,7 @@ namespace BoVoyage.Models
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+        public DbSet<BoVoyage.Areas.Client.Models.VoyagePersonnesViewModel> VoyagePersonnesViewModel { get; set; }
     }
 }

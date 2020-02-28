@@ -13,12 +13,22 @@ namespace BoVoyage.Models
             Voyage = new HashSet<Voyage>();
         }
 
+        [Display(Name = "IdDestination")]
         public int Id { get; set; }
+
+        [Display(Name = "IdDestinationParente")]
         public int? IdParente { get; set; }
+
+        [Display(Name = "Nom de la destination")]
         public string Nom { get; set; }
+
+        [Display(Name = "Type de destination")]
         public byte Niveau { get; set; }
+
+        [Display(Name = "Description")]
         public string Description { get; set; }
 
+        [Display(Name = "IdDestinationParente")]
         public virtual Destination IdParenteNavigation { get; set; }
         public virtual ICollection<Destination> InverseIdParenteNavigation { get; set; }
         [DataType(DataType.ImageUrl)]

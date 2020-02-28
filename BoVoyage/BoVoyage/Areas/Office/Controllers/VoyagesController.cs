@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace BoVoyage.Areas.Office.Controllers
 {
     [Area("Office")]
-    [Authorize(Roles = "Admin, Manager")]
+    //[Authorize(Roles = "Admin, Manager")]
     public class VoyagesController : Controller
     {
         private readonly BoVoyageContext _context;

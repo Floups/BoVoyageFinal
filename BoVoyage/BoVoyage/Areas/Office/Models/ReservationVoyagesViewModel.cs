@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace BoVoyage.Areas.Office.Models
 {
-   
+    
     public class ReservationVoyagesViewModel
     {
         public int Id { get; set; }

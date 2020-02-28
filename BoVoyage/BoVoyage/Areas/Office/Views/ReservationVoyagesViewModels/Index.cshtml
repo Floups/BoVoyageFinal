@@ -1,29 +1,76 @@
-﻿@model IEnumerable<BoVoyage.Areas.Office.Models.ReservationVoyagesViewModel>
+﻿@model BoVoyage.Areas.Office.Models.ReservationVoyagesViewModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Tableau de bord";
 }
 
-<h1>Index</h1>
+<h1>@ViewData["Title"] </h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+
+<div class="row">
+    <div class="col-6">
+        <h2>Liste des réservations en cours</h2>
+        <div class="row">
+            @foreach (var resa in Model.Reservations)
+            {
+                <div class="card m-1" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Client : @resa.IdClient</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">@resa.IdVoyage : @resa.IdVoyageNavigation.IdDestinationNavigation.Nom</h6>
+                        <p class="card-text"><em>Départ :</em> @Html.DisplayFor(model => resa.IdVoyageNavigation.DateDepart)</p>
+                        <p class="card-text"><em>Retour :</em> @Html.DisplayFor(model => resa.IdVoyageNavigation.DateRetour)</p>
+                        <p class="card-text">@resa.IdEtatDossierNavigation.Libelle</p>
+                        <a asp-controller="Dossierresa" asp-action="Edit" class="card-link">Afficher</a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="col-6">
+        <h2>Liste des voyages à départ iminent</h2>
+        <div class="row">
+            @foreach (var voyage in Model.Voyages)
+            {
+                <div class="card m-1" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Id @voyage.Id : @voyage.IdDestinationNavigation.Nom</h5>
+                        <h6 class="card-subtitle mb-2 text-muted"><em>Départ :</em> @Html.DisplayFor(model => voyage.DateDepart)</h6>
+                        <h6 class="card-subtitle mb-2 text-muted"><em>Retour :</em> @Html.DisplayFor(model => voyage.DateRetour)</h6>
+                        <p class="card-text"><strong style="color:red">@(((TimeSpan)(voyage.DateDepart - DateTime.Now)).Days) jours restants! </strong></p>
+                        <a class="btn btn-primary" data-toggle="modal" data-target="#voyage"data-id="@voyage.Id" >Voir voyage</a>
+                    </div>
+                </div>
+            }
+
+        </div>
+
+    </div>
+</div>
+
+<!-- Modal -->
+
+<div class="modal fade" id="voyage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"> Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <partial name="_Details" model="@Model.Voyages.Last()" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
-    </tbody>
-</table>

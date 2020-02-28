@@ -25,10 +25,10 @@ namespace BoVoyage.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var voyagesMoinsCher =  _context.Voyage.OrderBy(v => v.PrixHt).Take(5).Include(v => v.IdDestinationNavigation).ThenInclude(d => d.Photo).ToList();
+            var voyagesMoinsCher = await _context.Voyage.OrderBy(v => v.PrixHt).Take(5).Include(v => v.IdDestinationNavigation).ThenInclude(d => d.Photo).ToListAsync();
             ViewBag.VoyagesMoinsCher = voyagesMoinsCher;
 
-            ViewBag.VoyagesDateProche =  _context.Voyage.OrderBy(v => v.DateDepart).Take(5).Include(v => v.IdDestinationNavigation).ThenInclude(d => d.Photo).ToList();
+            ViewBag.VoyagesDateProche = await _context.Voyage.OrderBy(v => v.DateDepart).Take(5).Include(v => v.IdDestinationNavigation).ThenInclude(d => d.Photo).ToListAsync();
 
             var idRegionNbvoyage = new List<int>();
             var regionNbVoyage = new List<Destination>();

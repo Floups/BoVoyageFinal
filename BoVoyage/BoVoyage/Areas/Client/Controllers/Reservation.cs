@@ -7,10 +7,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BoVoyage.Areas.Client.Models;
 using BoVoyage.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BoVoyage.Areas.Client.Controllers
 {
     [Area("Client")]
+    [Authorize(Roles = "Member")]
     public class Reservation : Controller
     {
         private readonly BoVoyageContext _context;

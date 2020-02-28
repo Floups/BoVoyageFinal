@@ -39,40 +39,48 @@
         <input class="form-control input-group mb-3" type="date" name="dateMin" value="@ViewBag.DateMin" />
         <input class="form-control input-group mb-3" type="date" name="dateMax" value="@ViewBag.DateMax" />
 
-        <button class="btn btn-primary" type="submit">Filtrer</button> 
+        <button class="btn btn-primary" type="submit">Filtrer</button>
         <a class="btn btn-primary" asp-action="Index"> Effacer filtre </a>
     </form>
 
-        <div class="col-md-10">
-            <div class="card-columns">
+    <div class="col-md-10">
+        <div class="card-columns">
 
-                @foreach (var voyage in Model)
+            @foreach (var voyage in Model)
 
-                {
-                    @if (voyage.PlacesDispo != 0)
-                    {<div class="card">
-                            <img src="/img/@ViewBag.Photos[voyage.IdDestination]" class="card-img-top" alt="@Html.DisplayFor(modelItem => voyage.IdDestinationNavigation.Nom)">
-                            <div class="card-body">
-                                <h3 class="card-title">@Html.DisplayFor(modelItem => voyage.IdDestinationNavigation.Nom)</h3>
-                                <p class="card-text">
-                                    Du <strong>@Html.DisplayFor(modelItem => voyage.DateDepart) </strong>
-                                    au <strong>@Html.DisplayFor(modelItem => voyage.DateRetour) </strong>
-                                </p>
-                                <p>@Html.DisplayFor(modelItem => voyage.Descriptif)</p>
-                                <div class="d-flex justify-content-center">
+            {
+                @if (voyage.PlacesDispo != 0)
+                {<div class="card">
+                        @if (!voyage.IdDestinationNavigation.Photo.Any())
+                        {
+                            <img src="~/img/no_result.jpg" class="card-img-top" alt="@Html.DisplayFor(modelItem => voyage.IdDestinationNavigation.Nom)">
+                        }
+                        else
+                        {
+                            <img src="/img/@voyage.IdDestinationNavigation.Photo.First().NomFichier" class="card-img-top" alt="@Html.DisplayFor(modelItem => voyage.IdDestinationNavigation.Nom)">
 
-                                    <a asp-action="Details" asp-route-id="@voyage.Id" class="btn btn-secondary">En savoir plus</a>
-                                </div>
+                        }
+                        <div class="card-body">
+                            <h3 class="card-title">@Html.DisplayFor(modelItem => voyage.IdDestinationNavigation.Nom)</h3>
+                            <p class="card-text">
+                                Du <strong>@Html.DisplayFor(modelItem => voyage.DateDepart) </strong>
+                                au <strong>@Html.DisplayFor(modelItem => voyage.DateRetour) </strong>
+                            </p>
+                            <p>@Html.DisplayFor(modelItem => voyage.Descriptif)</p>
+                            <div class="d-flex justify-content-center">
+
+                                <a asp-action="Details" asp-route-id="@voyage.Id" class="btn btn-secondary">En savoir plus</a>
                             </div>
-                            <div class="card-footer">
-                                <p class="text-center">Au prix de <span class="font-weight-bold">@Html.DisplayFor(modelItem => voyage.PrixHt)</span>/personne</p>
-                            </div>
-                        </div>}
+                        </div>
+                        <div class="card-footer">
+                            <p class="text-center">Au prix de <span class="font-weight-bold">@Html.DisplayFor(modelItem => voyage.PrixHt)</span>/personne</p>
+                        </div>
+                    </div>}
 
-                }
-            </div>
-
+            }
         </div>
+
+    </div>
 
     @if (!Model.Any())
     {<p>Désolé. Aucun voyage ne correspond à votre recherche.</p>}

@@ -1,6 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Accueil";
-   
+
 }
 
 <section id="presentationAccueil" class="row justify-content-center">
@@ -38,18 +38,26 @@
     @for (int i = 0; i < 5; i++)
     {
         string[] descriptionMinim = @ViewBag.RegionNbVoyage[i].Description.Split(' ', 20);
-        descriptionMinim[descriptionMinim.Length - 1] = " ...";  
+        descriptionMinim[descriptionMinim.Length - 1] = " ...";
         <div class="">
             <div class="card m-3">
-                <img src="~/img/@(ViewBag.RegionNbVoyage[i].Photo[0].NomFichier)" class="card-img-top" alt="@(ViewBag.RegionNbVoyage[i].Photo[0].NomFichier)">
+                @if (ViewBag.RegionNbVoyage[i].Photo.Count == 0)
+                {
+                    <img src="~/img/no_result.jpg" class="card-img-top" alt="Pas d'image">
+                }
+                else
+                {
+                    <img src="~/img/@(ViewBag.RegionNbVoyage[i].Photo[0].NomFichier)" class="card-img-top" alt="@(ViewBag.RegionNbVoyage[i].Photo[0].NomFichier)">
+
+                }
                 <div class="card-body">
-                    <h3 class="card-title">@ViewBag.RegionNbVoyage[i].Nom</h3>                    
+                    <h3 class="card-title">@ViewBag.RegionNbVoyage[i].Nom</h3>
                     <p class="text-justify">@string.Join(' ', descriptionMinim)</p>
                     <div class="d-flex justify-content-center">
-                        <a asp-action="Details" asp-route-id="" class="btn btn-secondary">Liste des Voyages</a>
+                        <a asp-area="Client" asp-controller="Voyages" asp-action="Index" asp-route-dest="@ViewBag.RegionNbVoyage[i].Id" class="btn btn-secondary">Liste des Voyages</a>
                     </div>
-                </div>                
+                </div>
             </div>
         </div>
-    }    
+    }
 </section>

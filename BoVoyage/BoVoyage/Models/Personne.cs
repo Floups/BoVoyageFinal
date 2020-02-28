@@ -12,6 +12,12 @@ namespace BoVoyage.Models
         }
 
         public int Id { get; set; }
+        /// <summary>
+        /// 1: client (forcément utilisateur)
+        /// 2: voyageur
+        /// 3: contact
+        /// 4: utilisateur
+        /// </summary>
         public byte TypePers { get; set; }
         [Required]
         public string Civilite { get; set; }

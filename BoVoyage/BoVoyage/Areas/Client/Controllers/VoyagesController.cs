@@ -56,25 +56,7 @@ namespace BoVoyage.Areas.Client.Controllers
             }
 
 
-            var listeVoyages = await voyages.ToListAsync();
-            var photos = new Dictionary<int, string>();
-            foreach (var item in listeVoyages)
-            {
-                Photo photo = item.IdDestinationNavigation.Photo.FirstOrDefault();
-                if (photo == null)
-                {
-                    photos.Add(item.IdDestination, "no_result.jpg");
-                }
-                else
-                {
-                    if (!photos.ContainsKey(item.IdDestination))
-                    {
-                        photos.Add(item.IdDestination, photo.NomFichier);
-                    }
-
-                }
-            }
-            ViewBag.Photos = photos;
+            var listeVoyages = await voyages.ToListAsync();            
 
             return View(listeVoyages);
         }

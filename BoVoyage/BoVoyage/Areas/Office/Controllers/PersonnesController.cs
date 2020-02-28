@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BoVoyage.Models;
+using System.Xml.Serialization;
+using System.IO;
 
 namespace BoVoyage.Areas.Office.Controllers
 {
@@ -43,6 +45,28 @@ namespace BoVoyage.Areas.Office.Controllers
             var boVoyageContext = await personnes.ToListAsync();
 
             return View( boVoyageContext);
+        }
+
+        public FileResult TelechargerXML()
+        {
+            var listClients = _context.Personne.Where(p=>p.TypePers==2).ToList();
+                Serialiser(listClients);
+
+            string fileName = "Clients.xml";
+            byte[] fileBytes = System.IO.File.ReadAllBytes($"wwwroot/XML/{fileName}");
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+        }
+
+        static void Serialiser(List<Personne> listClients)
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(List<Personne>),
+                           new XmlRootAttribute("Clients"));
+
+            using (var sw = new StreamWriter(@"wwwroot\XML\Clients.xml"))
+            {
+                serializer.Serialize(sw, listClients);
+            }
+
         }
 
         // GET: Office/Personnes/Details/5

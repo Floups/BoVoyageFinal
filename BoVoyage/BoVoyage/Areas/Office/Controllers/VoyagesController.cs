@@ -20,12 +20,13 @@ namespace BoVoyage.Areas.Office.Controllers
         }
 
         // GET: Office/Voyages
-        public async Task<IActionResult> Index(int? dest, decimal prixMin, decimal prixMax, DateTime dateMin, DateTime dateMax)
+        public async Task<IActionResult> Index(int? dest, decimal prixMin, decimal prixMax, DateTime dateMin, DateTime dateMax, int place)
         {
             var listeDestinations = await _context.Destination.ToListAsync();
             ViewBag.Destinations = new SelectList(listeDestinations, "Id", "Nom", dest);
             ViewBag.PrixMin = prixMin;
             ViewBag.PrixMax = prixMax;
+            ViewBag.Place = place;
 
             IQueryable<Voyage> voyages = _context.Voyage.Include(v => v.IdDestinationNavigation);
 
@@ -53,6 +54,9 @@ namespace BoVoyage.Areas.Office.Controllers
                 ViewBag.DateMax = dateMax.ToString("yyyy-MM-dd");
                 voyages = voyages.Where(v => v.DateDepart >= dateMin && v.DateDepart <= dateMax);
             }
+            if (place!=0)
+                voyages = voyages.Where(v => v.PlacesDispo >= place);
+            
             var boVoyageContext = await voyages.ToListAsync();
 
             return View( boVoyageContext);

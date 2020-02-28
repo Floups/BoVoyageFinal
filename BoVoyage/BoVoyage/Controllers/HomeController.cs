@@ -55,7 +55,6 @@ namespace BoVoyage.Controllers
                 }
             }
            
-
             ViewBag.RegionNbVoyage = regionNbVoyage;
             return View();            
         }
@@ -85,7 +84,8 @@ namespace BoVoyage.Controllers
                     Nom = newContact.Nom,
                     Prenom = newContact.Prenom,
                     Telephone = newContact.Telephone,
-                    Email = newContact.Email
+                    Email = newContact.Email,
+                    TypePers = 3
                 };
 
                 if (ModelState.IsValid)

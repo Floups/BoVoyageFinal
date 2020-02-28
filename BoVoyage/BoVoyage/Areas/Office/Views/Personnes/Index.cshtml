@@ -1,0 +1,115 @@
+﻿@model IEnumerable<BoVoyage.Models.Personne>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Liste de contacts</h1>
+
+<form asp-controller="Personnes" asp-action="Index" method="get">
+    <div class="row m-1">
+        <div class="col-3">
+            <label><strong>Catégorie de personne</strong></label>
+            <div>
+                <select class="form-control" name="cat" asp-items="@ViewBag.Categorie">
+                    <option value="0" selected>Aucun</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-3">
+            <label><strong>Nom</strong></label>
+            <input class="form-control" name="nom" min="0" placeholder="Nom" value="@ViewBag.Nom" />
+        </div>
+
+        <div class="col-3">
+            <button class="btn btn-primary" type="submit">Filtrer</button>
+            <a class="btn btn-primary" asp-action="Index"> Effacer filtre </a>
+        </div>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TypePers)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Civilite)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Prenom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Telephone)
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                @if (item.TypePers == 1)
+                {
+                    <td>
+                        Client
+                    </td>
+                }
+                @if (item.TypePers == 2)
+                {
+                    <td>
+                        Voyageur
+                    </td>
+                }
+                @if (item.TypePers == 3)
+                {
+                    <td>
+                        Contact
+                    </td>
+                }
+                @if (item.TypePers == 4)
+                {
+                    <td>
+                        Utilisateur
+                    </td>
+                }
+                <td>
+                    @Html.DisplayFor(modelItem => item.Civilite)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Prenom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Telephone)
+                </td>
+
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

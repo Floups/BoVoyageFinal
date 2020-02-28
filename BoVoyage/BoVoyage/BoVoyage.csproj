@@ -23,6 +23,8 @@
   <ItemGroup>
     <Folder Include="Areas\Client\Data\" />
     <Folder Include="Areas\Office\Controllers\" />
+    <Folder Include="Areas\Client\Models\" />
+    <Folder Include="Areas\Client\Views\" />
     <Folder Include="Areas\Office\Data\" />
     <Folder Include="Areas\Office\Models\" />
     <Folder Include="wwwroot\img\" />

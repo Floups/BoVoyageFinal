@@ -15,7 +15,7 @@
     </p>
 </div>
 
-@if (ViewBag.Valid == null)
+@if(ViewBag.Valid == null)
 {<p><strong>Vous pouvez aussi envoyer un message <em>via</em> le formulaire suivant </strong></p>
     <div>
         <form asp-action="Create">
@@ -58,7 +58,7 @@
                 <span asp-validation-for="Message" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Envoyer" class="btn btn-primary" />
             </div>
         </form>
     </div>}

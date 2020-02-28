@@ -44,7 +44,7 @@ namespace BoVoyage.Areas.Identity.Pages.Account.Manage
         public class InputModel
         {
             [Required]
-            [EmailAddress]
+            [EmailAddress(ErrorMessage ="Format e-mail incorrect.")]
             [Display(Name = "Nouvel adresse e-mail")]
             public string NewEmail { get; set; }
         }

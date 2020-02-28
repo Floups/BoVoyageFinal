@@ -7,8 +7,59 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Créer nouveau</a>
 </p>
+
+
+<form asp-controller="Voyages" asp-action="Index" method="get">
+    <div class="row">
+        <div class="col-3">
+            <label>Destination</label>
+            <div>
+                <select class="form-control" name="dest" asp-items="@ViewBag.Destinations">
+                    <option value="0" selected>Aucun</option>
+                </select>
+            </div>
+            <label>Nombre de places disponibles</label>
+            <input class="form-control" name="place" min="0" placeholder="Places disponibles" value="@ViewBag.Place" />
+            <div>
+
+            </div>
+        </div>
+
+        <div class="col-3">
+            <label>Fourchette de prix</label>
+            <div class="input-group">
+                <input class="form-control" name="prixMin" min="0" placeholder="Prix Min" value="@ViewBag.PrixMin" />
+                <div class="input-group-append">
+                    <span class="input-group-text">€</span>
+                </div>
+            </div>
+            <div class="input-group">
+                <input class="form-control" name="prixMax" min="0" placeholder="Prix Max" value="@ViewBag.PrixMax" />
+                <div class="input-group-append">
+                    <span class="input-group-text">€</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-3">
+            <label>Fourchette de date de départ</label>
+            <input class="form-control input-group" type="date" name="dateMin" value="@ViewBag.DateMin" />
+            <input class="form-control input-group" type="date" name="dateMax" value="@ViewBag.DateMax" />
+        </div>
+        <div>
+            <button class="btn btn-primary" type="submit">Filtrer</button>
+            <a class="btn btn-primary" asp-action="Index"> Effacer filtre </a>
+        </div>
+       
+    </div>
+</form>
+
+
+
+
+
 <table class="table">
     <thead>
         <tr>
@@ -37,35 +88,36 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateDepart)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateRetour)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PlacesDispo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PrixHt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Reduction)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Descriptif)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdDestinationNavigation.Nom)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateDepart)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateRetour)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PlacesDispo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrixHt)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Reduction)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descriptif)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdDestinationNavigation.Nom)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

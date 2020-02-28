@@ -8,9 +8,16 @@
 @{
     if (@Model.DisplayConfirmAccountLink)
     {
+
 <p>
     Cette application n'a pas pas de service mail pour envoyer de mail de confirmation.
 </p>
+
+    <p>
+        Cette application n'a pas pas de service mail pour envoyer de mail de confirmation.
+        <a id="confirm-link" href="@Model.EmailConfirmationUrl">Cliquer ici pour confirmer votre compte.</a>
+    </p>
+
     }
     else
     {

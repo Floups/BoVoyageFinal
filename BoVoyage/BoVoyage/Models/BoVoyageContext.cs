@@ -174,6 +174,7 @@ namespace BoVoyage.Models
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 
+
         //public DbSet<BoVoyage.Areas.Office.Models.ReservationVoyagesViewModel> ReservationVoyagesViewModel { get; set; }
 
         //public DbSet<BoVoyage.Areas.Client.Models.VoyagePersonnesViewModel> VoyagePersonnesViewModel { get; set; }

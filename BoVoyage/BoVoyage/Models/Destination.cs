@@ -20,12 +20,15 @@ namespace BoVoyage.Models
         public int? IdParente { get; set; }
 
         [Display(Name = "Nom de la destination")]
+        [Required(ErrorMessage = "Champ requis.")]
         public string Nom { get; set; }
 
         [Display(Name = "Type de destination")]
+        [Required(ErrorMessage = "Champ requis.")]
         public byte Niveau { get; set; }
 
         [Display(Name = "Description")]
+        [Required(ErrorMessage = "Champ requis.")]
         public string Description { get; set; }
 
         [Display(Name = "IdDestinationParente")]

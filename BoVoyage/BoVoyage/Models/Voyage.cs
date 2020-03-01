@@ -15,21 +15,27 @@ namespace BoVoyage.Models
         public int Id { get; set; }
 
         [Display(Name = "IdDestination")]
+        [Required(ErrorMessage = "Champ requis.")]
         public int IdDestination { get; set; }
 
         [DataType(DataType.Date), Display(Name = "Date de départ")]
+        [Required(ErrorMessage = "Champ requis.")]
         public DateTime DateDepart { get; set; }
 
         [DataType(DataType.Date), Display(Name = "Date de retour")]
+        [Required(ErrorMessage = "Champ requis.")]
         public DateTime DateRetour { get; set; }
 
         [Display(Name = "Nombre de places disponibles")]
+        [Required(ErrorMessage = "Champ requis.")]
         public int PlacesDispo { get; set; }
 
         [Display(Name = "Prix HT"),DataType(DataType.Currency)]
+        [Required(ErrorMessage = "Champ requis.")]
         public decimal PrixHt { get; set; }
 
         [Display(Name = "Taux de réduction")]
+        [Required(ErrorMessage = "Champ requis.")]
         public decimal Reduction { get; set; }
 
         [Display(Name = "Descriptif du voyage")]

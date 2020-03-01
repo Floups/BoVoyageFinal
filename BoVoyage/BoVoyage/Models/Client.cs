@@ -15,6 +15,7 @@ namespace BoVoyage.Models
         public int Id { get; set; }
 
         [Display(Name = "IdClient")]
+        [Required(ErrorMessage = "Champ requis.")]
         public virtual Personne IdNavigation { get; set; }
 
         [Display(Name = "IdDossier")]

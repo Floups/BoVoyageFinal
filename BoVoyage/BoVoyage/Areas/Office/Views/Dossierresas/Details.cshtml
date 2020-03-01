@@ -1,0 +1,48 @@
+﻿@model BoVoyage.Models.Dossierresa
+
+@{
+    ViewData["Title"] = "Détails du dossier de réservation";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <h4>Dossier numéro @Model.Id</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.NumeroCb)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NumeroCb)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PrixTotal)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PrixTotal)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IdClientNavigation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IdClientNavigation.Id)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IdEtatDossierNavigation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IdEtatDossierNavigation.Libelle)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IdVoyageNavigation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IdVoyageNavigation.Id)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Editer</a> |
+    <a asp-action="Index">Retour</a>
+</div>

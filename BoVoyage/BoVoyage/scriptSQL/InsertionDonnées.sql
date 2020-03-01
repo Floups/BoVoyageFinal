@@ -86,8 +86,10 @@ insert @personne values
 (1,'Mr','Dupont', 'Jean','jd@msn.com','0123456789','1991-01-01'),
 (2,'Mme','Dupont','Jeanette','j-d@msn.com','0123456789','1991-01-01'),
 (3,'Mr','Smith','Jonh','js@gmail.com','0123456789','1991-01-01'),
-(4,'Mme','Smith','Jane','j-s@gmail.com','0123456789','1991-01-01')
+(4,'Mme','Smith','Jane','j-s@gmail.com','0123456789','1991-01-01'),
+(1,'Mme','Doe','Jane','j-d@gmail.com','0123456789','1991-01-01')
 
+insert Personne select * from @personne
 
 declare @etatDossier as table(
 Id int,
@@ -102,7 +104,21 @@ insert @etatDossier values
 
 insert Etatdossier select * from @etatDossier
 
-insert Personne select * from @personne
+declare @dossierresa as table (
+NumeroCB varchar(16),
+IdClient int,
+IdEtatDossier int,
+IdVoyage int,
+PrixTotal decimal
+)
+
+insert @dossierresa values
+(1234567891234567, 1, 2, 1, 100.12),
+(1234567891234568, 5, 2, 2, 200.12)
+
+insert Dossierresa select * from @dossierresa
+
+
 
 insert Destination select * from @destination
 
@@ -111,3 +127,4 @@ insert Voyage select * from @voyage
 insert Photo select * from @photos
 
 insert Client select Id from Personne where TypePers = 1
+

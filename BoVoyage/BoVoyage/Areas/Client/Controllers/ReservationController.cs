@@ -59,7 +59,7 @@ namespace BoVoyage.Areas.Client.Controllers
             return View(voyagePersonnes);
         }
 
-        public IActionResult AjoutVoyageur(VoyagePersonnesViewModel voyagePersonnes, int idVoyage, int nbPersonnes)
+        public async Task<IActionResult> AjoutVoyageur(VoyagePersonnesViewModel voyagePersonnes, int idVoyage, int nbPersonnes)
         {
             //On récupère le voyage en cours
             var voyage = _context.Voyage.Where(v => v.Id == idVoyage).Include(v => v.IdDestinationNavigation).FirstOrDefault();
@@ -79,6 +79,7 @@ namespace BoVoyage.Areas.Client.Controllers
             }
             prixTva += prixTva * 0.20;
             ViewBag.PrixParVoyageur = prixParVoyageur;
+            ViewBag.Utilisateur = await _context.Personne.Where(p => p.Email == User.FindFirstValue(ClaimTypes.Name)).FirstOrDefaultAsync();
             ViewBag.PrixTva = prixTva;
             HttpContext.Session.Set("prix", prixTva);
             if (ModelState.IsValid)
@@ -113,7 +114,7 @@ namespace BoVoyage.Areas.Client.Controllers
 
             foreach (var item in voyageurs)
             {
-                if (item.Email != null)
+                if (ModelState.IsValid)
                 {
 
                     //Reduc de 60% pour - 12ans
@@ -143,13 +144,19 @@ namespace BoVoyage.Areas.Client.Controllers
 
                 foreach(var voyageur in HttpContext.Session.Get<List<Personne>>("voyageurs"))
                 {
-                    if (!_context.Personne.Where(p => p.Email == voyageur.Email).Any())
+                    if (voyageur.Nom != null)
                     {
-                        voyageur.TypePers = 2;
-                        _context.Personne.Add(voyageur);
-                    }
 
+                        if (!_context.Personne.Where(p => p.Email == voyageur.Email).Any())
+                        {
+                            voyageur.TypePers = 2;
+                            _context.Personne.Add(voyageur);
+                        }
+                        await _context.SaveChangesAsync();
+                        _context.Voyageur.Add(new Voyageur() { Id = voyageur.Id, Idvoyage = HttpContext.Session.Get<int>("idVoyage") });
+                    }
                 }
+                _context.Voyageur.Add(new Voyageur() { Id = personne.Id, Idvoyage = HttpContext.Session.Get<int>("idVoyage") });
                 var dossier = new Dossierresa() { NumeroCb = dossierresa.NumeroCb, IdClient = personne.Id, IdEtatDossier = 2, IdVoyage = HttpContext.Session.Get<int>("idVoyage"), PrixTotal = HttpContext.Session.Get<decimal>("prix") };
                 _context.Personne.Update(personne);
                 _context.Dossierresa.Add(dossier);

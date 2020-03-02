@@ -66,8 +66,6 @@ insert @photos values
 ('birmanie_2.jpg', 4),
 ('birmanie_3.jpg', 4),
 ('bretagne_1.jpg', 6),
-('canada_1.jpg', 5),
-('canada_2.jpg', 5),
 ('saint-barth_1.jpg', 3),
 ('saint-barth_1.jpg', 3),
 ('france_1.jpg', 1),

@@ -4,10 +4,10 @@
     ViewData["Title"] = "Paiement";
 }
 
-<h1>Réservation</h1>
+<h1 class="text-center ">Réservation</h1>
 
-<div class="row">
-    <div class="col">
+<div class="row justify-content-center">
+    <div class="col-md-9">
         <div class="card">
             <div class="card-header">
                 <h2>Paiement</h2>
@@ -22,8 +22,15 @@
                         <label asp-for="NumeroCb" class="control-label"></label>
                         <input asp-for="NumeroCb" class="form-control" />
                         <span asp-validation-for="NumeroCb" class="text-danger"></span>
-                    </div>                    
-                    <input type="submit" value="Valider" class="btn btn-success">
+                    </div>
+                    <h5 class="card-title">Souscrire à une assurance</h5>
+                    <div class="custom-control custom-checkbox">
+                        <input asp-for="Assurance" class="custom-control-input" />
+                        <label asp-for="Assurance" class="custom-control-label"></label>
+                    </div>
+                    <div class="form-group d-flex justify-content-center">
+                        <input type="submit" value="Valider" class="btn btn-success">
+                    </div>
                 </form>
             </div>
         </div>

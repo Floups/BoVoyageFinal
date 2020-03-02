@@ -7,126 +7,151 @@
 
 
 <div class="row">
-    <div class="col-4">
-        <div>
-            <h1>@ViewData["Title"]</h1>
-            <hr />
-            <dl class="row">
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Civilite)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Civilite)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Nom)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Nom)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Prenom)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Prenom)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Email)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Email)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Telephone)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Telephone)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Datenaissance)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Datenaissance)
-                </dd>
-            </dl>
-        </div>
-        <div>
-            <a asp-action="Edit" asp-route-id="@Model.Id">Editer</a>
-        </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
 
-    </div>
-    <div class="col-8">
-        <h1>Mes réservations</h1>
-        <hr />
-        @foreach (var resa in Model.Client.Dossierresa)
-        {
-            <div class="card m-1 p-1">
-                <div>
-                    <h4>Dossier réservation numéro @resa.Id</h4>
-                    <hr />
-                    <dl class="row">
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => resa.NumeroCb)
-                        </dt>
-                        <dd class="col-sm-10">
-                            @Html.DisplayFor(model => resa.NumeroCb)
-                        </dd>
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => resa.PrixTotal)
-                        </dt>
-                        <dd class="col-sm-10">
-                            @Html.DisplayFor(model => resa.PrixTotal)
-                        </dd>
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => resa.IdClientNavigation)
-                        </dt>
-                        <dd class="col-sm-10">
-                            @Html.DisplayFor(model => resa.IdClientNavigation.Id)
-                        </dd>
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => resa.IdEtatDossierNavigation)
-                        </dt>
-                        <dd class="col-sm-10">
-                            @Html.DisplayFor(model => resa.IdEtatDossierNavigation.Libelle)
-                        </dd>
-                    </dl>
-                </div>
-                <div>
-                    <h5>Détails de voyage</h5>
-                    <hr />
-                    <dl class="row">
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => resa.IdVoyageNavigation.IdDestinationNavigation.Nom)
-                        </dt>
-                        <dd class="col-sm-10">
-                            @Html.DisplayFor(model => resa.IdVoyageNavigation.IdDestinationNavigation.Nom)
-                        </dd>
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => resa.IdVoyageNavigation.DateDepart)
-                        </dt>
-                        <dd class="col-sm-10">
-                            @Html.DisplayFor(model => resa.IdVoyageNavigation.DateDepart)
-                        </dd>
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => resa.IdVoyageNavigation.DateRetour)
-                        </dt>
-                        <dd class="col-sm-10">
-                            @Html.DisplayFor(model => resa.IdVoyageNavigation.DateRetour)
-                        </dd>
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => resa.IdVoyageNavigation.Descriptif)
-                        </dt>
-                        <dd class="col-sm-10">
-                            @Html.DisplayFor(model => resa.IdVoyageNavigation.Descriptif)
-                        </dd>
-                    </dl>
-                </div>
-
+                <h5>@ViewData["Title"]</h5>
             </div>
+            <div class="card-body">
 
-        }
+                <dl class="row">
+                    <dt class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.Civilite)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.Civilite)
+                    </dd>
+                    <dt class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.Nom)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.Nom)
+                    </dd>
+                    <dt class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.Prenom)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.Prenom)
+                    </dd>
+                    <dt class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.Email)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.Email)
+                    </dd>
+                    <dt class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.Telephone)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.Telephone)
+                    </dd>
+                    <dt class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.Datenaissance)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.Datenaissance)
+                    </dd>
+                </dl>
+            </div>
+            <div class="card-footer d-flex justify-content-center"  >
+                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Editer</a>
+            </div>
+        </div>
 
     </div>
+    @if (Model.Client != null && Model.Client.Dossierresa != null)
+    {
+
+
+        <div class="col-8">
+            <h1>Mes réservations</h1>
+            <hr />
+            @foreach (var resa in Model.Client.Dossierresa)
+            {
+                <div class="card m-1 p-1">
+                    <div>
+                        <h4>Dossier réservation numéro @resa.Id</h4>
+                        <hr />
+                        <dl class="row">
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => resa.NumeroCb)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => resa.NumeroCb)
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => resa.PrixTotal)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => resa.PrixTotal)
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => resa.IdClientNavigation)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => resa.IdClientNavigation.Id)
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => resa.IdEtatDossierNavigation)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => resa.IdEtatDossierNavigation.Libelle)
+                            </dd>
+                        </dl>
+                    </div>
+                    <div>
+                        <h5>Détails de voyage</h5>
+                        <hr />
+                        <dl class="row">
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => resa.IdVoyageNavigation.IdDestinationNavigation.Nom)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => resa.IdVoyageNavigation.IdDestinationNavigation.Nom)
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => resa.IdVoyageNavigation.DateDepart)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => resa.IdVoyageNavigation.DateDepart)
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => resa.IdVoyageNavigation.DateRetour)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => resa.IdVoyageNavigation.DateRetour)
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => resa.IdVoyageNavigation.Descriptif)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => resa.IdVoyageNavigation.Descriptif)
+                            </dd>
+                        </dl>
+                    </div>
+
+                </div>
+
+            }
+
+        </div>
+    }
+    else
+    {
+        <div class="col-md-8">
+
+            <div class="card">
+                <div class="card-header">
+                    <h5>Mes Réservations</h5>
+                </div>
+                <div class="card-body">
+                    <p>Vous n'avez aucune réservation en cours ...</p>
+                </div>
+            </div>
+        </div>
+    }
+
 
 </div>
 

@@ -19,7 +19,7 @@
                         <label class="control-label"></label>
                         <input value="@ViewBag.Utilisateur.Nom" class="form-control" disabled />
                     </div>
-                    <p>Pour modifier vos informations veuillez vous diriger vers votre <a href="#">espace personnel<a /></p>
+                    <p>Pour modifier vos informations veuillez vous diriger vers votre <a href="#">espace personnel</a></p>
                 </section>
                 <section class="voyageur">
                     <form asp-action="AjoutVoyageur" asp-route-IdVoyage="@Model.Voyage.Id" asp-route-nbPersonnes="@Model.Voyageurs.Count()">
@@ -115,7 +115,7 @@
                     </tbody>
                 </table>
                 <p class="card-text"></p>
-                <a asp-action="Paiement" asp-route-prix="@ViewBag.PrixTva" asp-route-idVoyage="@Model.Voyage.Id" class="btn btn-primary">Paiement</a>
+                <a asp-action="Paiement" class="btn btn-primary">Paiement</a>
             </div>
         </div>
     </div>

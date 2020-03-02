@@ -11,11 +11,10 @@
         <div class="card">
             <div class="card-header">
                 <h2>Paiement</h2>
-                <p>Montant total TTC : <span class="font-weight-bold"@ViewBag.Prix></span></p>
             </div>
             <div class="card-body">
                 <h5 class="card-title">Prix Total</h5>
-                    <p>XXX EUROS TTC</p>
+                <p>Montant total TTC : <span class="font-weight-bold">@ViewBag.Prix</span></p>
                 <h5 class="card-title">Carte Bleue</h5>
                 <form asp-action="View">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -25,7 +24,7 @@
                         <span asp-validation-for="NumeroCb" class="text-danger"></span>
                     </div>                    
                 </form>
-                <a href="#" class="btn btn-succes">Valider</a>
+                <a asp-action="ValiderResa" class="btn btn-success">Valider</a>
             </div>
         </div>
     </div>

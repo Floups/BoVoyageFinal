@@ -8,15 +8,18 @@ using Microsoft.EntityFrameworkCore;
 using BoVoyage.Areas.Client.Models;
 using BoVoyage.Models;
 using BoVoyage.Controllers;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BoVoyage.Areas.Client.Controllers
 {
     [Area("Client")]
-    public class Reservation : Controller
+    [Authorize(Roles = "Member")]
+    public class ReservationController : Controller
     {
         private readonly BoVoyageContext _context;
 
-        public Reservation(BoVoyageContext context)
+        public ReservationController(BoVoyageContext context)
         {
             _context = context;
         }
@@ -42,14 +45,15 @@ namespace BoVoyage.Areas.Client.Controllers
             foreach (var item in prixParVoyageur)
             {
                 prixTva += item; 
-                Tva(prixTva); 
+                
             }
-           
-
-            ViewBag.Utilisateur = await _context.Personne.Where(p => p.Id == 4).FirstOrDefaultAsync();
+            prixTva += prixTva*0.20; 
+            HttpContext.Session.Set("voyageurs",voyageurs);
+            ViewBag.Utilisateur = await _context.Personne.Where(p => p.Email == User.FindFirstValue(ClaimTypes.Name)).FirstOrDefaultAsync();
             ViewBag.PrixParVoyageur = prixParVoyageur;
+            HttpContext.Session.Set("prix", prixTva);
             ViewBag.PrixTva = prixTva;
-
+            HttpContext.Session.Set("idVoyage",idVoyage);
             var voyagePersonnes = new VoyagePersonnesViewModel(voyage, voyageurs);
 
             return View(voyagePersonnes);
@@ -72,12 +76,11 @@ namespace BoVoyage.Areas.Client.Controllers
             foreach (var item in prixParVoyageur)
             {
                 prixTva += item;
-                prixTva = Tva(prixTva);
             }
-            
+            prixTva += prixTva * 0.20;
             ViewBag.PrixParVoyageur = prixParVoyageur;
             ViewBag.PrixTva = prixTva;
-
+            HttpContext.Session.Set("prix", prixTva);
             if (ModelState.IsValid)
             {
                 //On stock en session si le voyageur est valide
@@ -96,8 +99,9 @@ namespace BoVoyage.Areas.Client.Controllers
             return RedirectToAction(nameof(Index), new { idVoyage, nbPersonnes = nbPersonnes-1 });
         }
 
-        public IActionResult Paiement(double prix, int idVoyage)
+        public IActionResult Paiement()
         {
+            double prix = HttpContext.Session.Get<double>("prix");
             ViewBag.Prix = prix;
             return View();
         }
@@ -126,10 +130,33 @@ namespace BoVoyage.Areas.Client.Controllers
             return prixParVoyageur;
         }
 
-        public double Tva(double totalHt)
+        public async Task<IActionResult> ValiderResa(string cb)
         {
-            return totalHt * 0.2;
-        }
+            if (ModelState.IsValid)
+            {
+                var personne = await _context.Personne.Where(p => p.Email == User.FindFirstValue(ClaimTypes.Name)).FirstOrDefaultAsync();
+                if( personne.TypePers == 4)
+                {
+                    personne.TypePers = 1;
+                    _context.Client.Add(new BoVoyage.Models.Client() { Id=personne.Id});
+                }
 
+                foreach(var voyageur in HttpContext.Session.Get<List<Personne>>("voyageurs"))
+                {
+                    if (!_context.Personne.Where(p => p.Email == voyageur.Email).Any())
+                    {
+                        voyageur.TypePers = 2;
+                        _context.Personne.Add(voyageur);
+                    }
+
+                }
+                var dossier = new Dossierresa() { NumeroCb = cb, IdClient = personne.Id, IdEtatDossier = 2, IdVoyage = HttpContext.Session.Get<int>("idVoyage"), PrixTotal = HttpContext.Session.Get<decimal>("prix") };
+                _context.Personne.Update(personne);
+                _context.Dossierresa.Add(dossier);
+                await _context.SaveChangesAsync();
+                return View();
+            }
+            return View("Paiement",cb);
+        }
     }
 }

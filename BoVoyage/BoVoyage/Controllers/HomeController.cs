@@ -23,7 +23,7 @@ namespace BoVoyage.Controllers
         }
 
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             var voyagesMoinsCher =  _context.Voyage.OrderBy(v => v.PrixHt).Take(5).Include(v => v.IdDestinationNavigation).ThenInclude(d => d.Photo).ToList();
             ViewBag.VoyagesMoinsCher = voyagesMoinsCher;

@@ -99,37 +99,18 @@ namespace BoVoyage.Areas.Office.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,NumeroCb,IdClient,IdEtatDossier,IdVoyage,PrixTotal")] Dossierresa dossierresa)
+        public async Task<IActionResult> Edit(int id, byte IdEtatDossier)
         {
-            if (id != dossierresa.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(dossierresa);
+            
+            var dossier =await _context.Dossierresa.FindAsync(id);
+            dossier.IdEtatDossier = IdEtatDossier;                        
+            
+                    _context.Update(dossier);
                     await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!DossierresaExists(dossierresa.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["IdClient"] = new SelectList(_context.Client, "Id", "Id", dossierresa.IdClient);
-            ViewData["IdEtatDossier"] = new SelectList(_context.Etatdossier, "Id", "Libelle", dossierresa.IdEtatDossier);
-            ViewData["IdVoyage"] = new SelectList(_context.Voyage, "Id", "Id", dossierresa.IdVoyage);
-            return View(dossierresa);
+                
+            
+            ViewData["IdEtatDossier"] = new SelectList(_context.Etatdossier, "Id", "Libelle", dossier.IdEtatDossier);
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Office/Dossierresas/Delete/5

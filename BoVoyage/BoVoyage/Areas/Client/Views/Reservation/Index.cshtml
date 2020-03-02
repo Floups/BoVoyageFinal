@@ -15,58 +15,85 @@
             <div class="card-body">
                 <section class="voyageur">
                     <h5 class="card-title">Vous</h5>
-                    <div class="form-group">
-                        <label class="control-label"></label>
-                        <input value="@ViewBag.Utilisateur.Nom" class="form-control" disabled />
+                    <div class="form-row">
+                        <div class="form-group col">
+                            <label class="control-label"></label>
+                            <input value="@ViewBag.Utilisateur.Nom" class="form-control" disabled />
+                        </div>
+                        <div class="form-group col">
+                            <label class="control-label"></label>
+                            <input value="@ViewBag.Utilisateur.Prenom" class="form-control" disabled />
+                        </div>
                     </div>
-                    <p>Pour modifier vos informations veuillez vous diriger vers votre <a href="#">espace personnel</a></p>
+                    <div class="form-row">
+                        <div class="form-group col">
+                            <label class="control-label"></label>
+                            <input value="@ViewBag.Utilisateur.Email" class="form-control" disabled />
+                        </div>
+                        <div class="form-group col">
+                            <label class="control-label"></label>
+                            <input value="@ViewBag.Utilisateur.Telephone" class="form-control" disabled />
+                        </div>
+                    </div>
+                    <p>Pour modifier vos informations veuillez vous diriger vers votre <a asp-controller="Personne" asp-action="Details">espace personnel</a></p>
+                    <hr />
                 </section>
                 <section class="voyageur">
                     <form asp-action="AjoutVoyageur" asp-route-IdVoyage="@Model.Voyage.Id" asp-route-nbPersonnes="@Model.Voyageurs.Count()">
                         @for (int i = 0; i < Model.Voyageurs.Count(); i++)
                         {
                             <h5 class="card-title">Accompagnant : @(i + 1)</h5>
-
-                            <div class="form-group">
-                                <label asp-for="Voyageurs[i].Civilite" class="control-label"></label>
-                                <select asp-for="Voyageurs[i].Civilite" class="form-control mr-sm-2 mb-2">
-                                    <option value="Mr">Monsieur</option>
-                                    <option value="Mme">Madame</option>
-                                </select>
+                            <div class="form-row">
+                                <div class="form-group col">
+                                    <label asp-for="Voyageurs[i].Civilite" class="control-label"></label>
+                                    <select asp-for="Voyageurs[i].Civilite" class="form-control mr-sm-2 mb-2">
+                                        <option value="Mr">Monsieur</option>
+                                        <option value="Mme">Madame</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col">
+                                    <label asp-for="Voyageurs[i].Datenaissance" class="control-label"></label>
+                                    <input asp-for="Voyageurs[i].Datenaissance" class="form-control" />
+                                    <span asp-validation-for="Voyageurs[i].Datenaissance" class="text-danger"></span>
+                                </div>                                
                             </div>
-                            <div class="form-group">
-                                <label asp-for="Voyageurs[i].Nom" class="control-label"></label>
-                                <input asp-for="Voyageurs[i].Nom" class="form-control" />
-                                <span asp-validation-for="Voyageurs[i].Nom" class="text-danger"></span>
+                            <div class="form-row">
+                                <div class="form-group col">
+                                    <label asp-for="Voyageurs[i].Nom" class="control-label"></label>
+                                    <input asp-for="Voyageurs[i].Nom" class="form-control" />
+                                    <span asp-validation-for="Voyageurs[i].Nom" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col">
+                                    <label asp-for="Voyageurs[i].Prenom" class="control-label"></label>
+                                    <input asp-for="Voyageurs[i].Prenom" class="form-control" />
+                                    <span asp-validation-for="Voyageurs[i].Prenom" class="text-danger"></span>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label asp-for="Voyageurs[i].Prenom" class="control-label"></label>
-                                <input asp-for="Voyageurs[i].Prenom" class="form-control" />
-                                <span asp-validation-for="Voyageurs[i].Prenom" class="text-danger"></span>
+                            <div class="form-row">
+                                <div class="form-group col">
+                                    <label asp-for="Voyageurs[i].Email" class="control-label"></label>
+                                    <input asp-for="Voyageurs[i].Email" class="form-control" />
+                                    <span asp-validation-for="Voyageurs[i].Email" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col">
+                                    <label asp-for="Voyageurs[i].Telephone" class="control-label"></label>
+                                    <input asp-for="Voyageurs[i].Telephone" class="form-control" />
+                                    <span asp-validation-for="Voyageurs[i].Telephone" class="text-danger"></span>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label asp-for="Voyageurs[i].Datenaissance" class="control-label"></label>
-                                <input asp-for="Voyageurs[i].Datenaissance" class="form-control" />
-                                <span asp-validation-for="Voyageurs[i].Datenaissance" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="Voyageurs[i].Email" class="control-label"></label>
-                                <input asp-for="Voyageurs[i].Email" class="form-control" />
-                                <span asp-validation-for="Voyageurs[i].Email" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="Voyageurs[i].Telephone" class="control-label"></label>
-                                <input asp-for="Voyageurs[i].Telephone" class="form-control" />
-                                <span asp-validation-for="Voyageurs[i].Telephone" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <input type="submit" value="Valider" class="btn btn-success" />
-                                <a asp-action="SupprimerVoyageur" asp-route-idVoyageur="@i" asp-route-idVoyage="@Model.Voyage.Id" asp-route-nbPersonnes="@Model.Voyageurs.Count()" type="button" class="btn btn-danger">Supprimer</a>
+                            <div class="form-group d-flex justify-content-center">
+                                <input type="submit" value="Valider" class="btn btn-success mr-3" />
+                                <a asp-action="SupprimerVoyageur" asp-route-idVoyageur="@i" asp-route-idVoyage="@Model.Voyage.Id" asp-route-nbPersonnes="@Model.Voyageurs.Count()" type="button" class="btn btn-danger ml-3">Supprimer</a>
                             </div>
                         }
                     </form>
+                    <hr />
+
                 </section>
-                <a asp-action="Index" asp-route-idVoyage="@Model.Voyage.Id" asp-route-nbPersonnes="@(Model.Voyageurs.Count() + 1)" class="btn btn-primary">Ajouter un Voyageur</a>
+                <section class="d-flex justify-content-center">
+
+                    <a asp-action="Index" asp-route-idVoyage="@Model.Voyage.Id" asp-route-nbPersonnes="@(Model.Voyageurs.Count() + 1)" class="btn btn-primary">Ajouter un Voyageur</a>
+                </section>
             </div>
         </div>
     </div>

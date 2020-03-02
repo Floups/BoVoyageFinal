@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace BoVoyage.Models
 {
@@ -10,9 +11,14 @@ namespace BoVoyage.Models
             Dossierresa = new HashSet<Dossierresa>();
         }
 
+        [Display (Name ="IdClient")]
         public int Id { get; set; }
 
+        [Display(Name = "IdClient")]
+        [Required(ErrorMessage = "Champ requis.")]
         public virtual Personne IdNavigation { get; set; }
+
+        [Display(Name = "IdDossier")]
         public virtual ICollection<Dossierresa> Dossierresa { get; set; }
     }
 }

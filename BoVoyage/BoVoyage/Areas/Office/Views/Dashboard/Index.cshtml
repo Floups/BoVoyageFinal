@@ -1,0 +1,57 @@
+﻿@model BoVoyage.Areas.Office.Models.Dashboard
+
+@{
+    ViewData["Title"] = "Tableau de bord";
+}
+
+<h1>@ViewData["Title"] </h1>
+
+
+<div class="row">
+    <div class="col-6">
+        <h2>Liste des réservations en cours</h2>
+        <div class="row">
+            @foreach (var resa in Model.Reservations)
+            {
+                <div class="card m-1" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Id Client: @resa.IdClient</h5>
+                        <h6 class="card-subtitle mb-2 text-muted"> Id Voyage <strong>@resa.IdVoyage </strong>vers <strong>@resa.IdVoyageNavigation.IdDestinationNavigation.Nom</strong> </h6>
+                        <p class="card-text"><em>Départ :</em> @Html.DisplayFor(model => resa.IdVoyageNavigation.DateDepart)</p>
+                        <p class="card-text"><em>Retour :</em> @Html.DisplayFor(model => resa.IdVoyageNavigation.DateRetour)</p>
+                        <p class="card-text">Statut :<strong>@resa.IdEtatDossierNavigation.Libelle</strong> </p>
+                        <a class="btn btn-primary" asp-controller="Dashboard" asp-action="Details" asp-route-id="@resa.Id" >Afficher</a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="col-6">
+        <h2>Liste des voyages à départ iminent</h2>
+        <div class="row">
+            @foreach (var voyage in Model.Voyages)
+            {
+                <div class="card m-1" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Id @voyage.Id : @voyage.IdDestinationNavigation.Nom</h5>
+                        <h6 class="card-subtitle mb-2 text-muted"><em>Départ :</em> @Html.DisplayFor(model => voyage.DateDepart)</h6>
+                        <h6 class="card-subtitle mb-2 text-muted"><em>Retour :</em> @Html.DisplayFor(model => voyage.DateRetour)</h6>
+                        <p class="card-text"><strong style="color:red">@(((TimeSpan)(voyage.DateDepart - DateTime.Now)).Days) jours restants! </strong></p>
+                        <a class="btn btn-primary" asp-controller="Dashboard" asp-action="Details" asp-route-id2="@voyage.Id">Voir voyage</a>
+                    </div>
+                </div>
+            }
+
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

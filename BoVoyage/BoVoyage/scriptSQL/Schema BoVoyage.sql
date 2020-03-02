@@ -38,7 +38,8 @@ CREATE TABLE Dossierresa
      IdClient INTEGER NOT NULL , 
      IdEtatDossier TINYINT NOT NULL , 
      IdVoyage INTEGER NOT Null,
-	 PrixTotal DECIMAL(18,2) Not Null ) 
+	 PrixTotal decimal(10,2) Not Null,
+	 Assurance bit Not Null Default 0) 
 Go
 
 ALTER TABLE DossierResa ADD Constraint Dossierresa_Pk PRIMARY KEY (Id)

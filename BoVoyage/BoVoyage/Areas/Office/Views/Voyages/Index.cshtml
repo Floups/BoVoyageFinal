@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<BoVoyage.Models.Voyage>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Liste des voyages";
 }
 
-<h1>Index</h1>
+<h1>@ViewData["Title"]</h1>
 
 <p>
     <a asp-action="Create">Créer nouveau</a>
@@ -13,7 +13,7 @@
 
 <form asp-controller="Voyages" asp-action="Index" method="get">
     <div class="row">
-        <div class="col-3">
+        <div class="col-3 mb-1">
             <label>Destination</label>
             <div>
                 <select class="form-control" name="dest" asp-items="@ViewBag.Destinations">
@@ -22,20 +22,19 @@
             </div>
             <label>Nombre de places disponibles</label>
             <input class="form-control" name="place" min="0" placeholder="Places disponibles" value="@ViewBag.Place" />
-            <div>
-
-            </div>
         </div>
 
         <div class="col-3">
             <label>Fourchette de prix</label>
             <div class="input-group">
-                <input class="form-control" name="prixMin" min="0" placeholder="Prix Min" value="@ViewBag.PrixMin" />
+                <label class="col-sm-2 col-form-label">De</label>
+                <input class="form-control " name="prixMin" min="0" placeholder="Prix Min" value="@ViewBag.PrixMin" />
                 <div class="input-group-append">
                     <span class="input-group-text">€</span>
                 </div>
             </div>
             <div class="input-group">
+                <label class="col-sm-2 col-form-label">A</label>
                 <input class="form-control" name="prixMax" min="0" placeholder="Prix Max" value="@ViewBag.PrixMax" />
                 <div class="input-group-append">
                     <span class="input-group-text">€</span>
@@ -45,14 +44,21 @@
 
         <div class="col-3">
             <label>Fourchette de date de départ</label>
-            <input class="form-control input-group" type="date" name="dateMin" value="@ViewBag.DateMin" />
-            <input class="form-control input-group" type="date" name="dateMax" value="@ViewBag.DateMax" />
+            <div class="input-group">
+                <label class="col-sm-2 col-form-label">Du</label>
+                <input class="form-control input-group" type="date" name="dateMin" value="@ViewBag.DateMin" />
+            </div>
+            <div class="input-group">
+                <label class="col-sm-2 col-form-label">Au</label>
+                <input class="form-control input-group" type="date" name="dateMax" value="@ViewBag.DateMax" />
+            </div>
+
+
         </div>
-        <div>
+        <div class="col-3">
             <button class="btn btn-primary" type="submit">Filtrer</button>
             <a class="btn btn-primary" asp-action="Index"> Effacer filtre </a>
         </div>
-       
     </div>
 </form>
 
@@ -113,9 +119,9 @@
                     @Html.DisplayFor(modelItem => item.IdDestinationNavigation.Nom)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Editer</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Détails</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Supprimer</a>
                 </td>
             </tr>
         }

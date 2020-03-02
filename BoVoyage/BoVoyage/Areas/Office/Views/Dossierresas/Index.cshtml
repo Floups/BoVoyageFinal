@@ -1,0 +1,65 @@
+﻿@model IEnumerable<BoVoyage.Models.Dossierresa>
+
+@{
+    ViewData["Title"] = "Liste des réservations";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>
+    <a asp-action="Create">Créer nouveau</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumeroCb)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrixTotal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdClientNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdEtatDossierNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdVoyageNavigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumeroCb)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrixTotal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdClientNavigation.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdEtatDossierNavigation.Libelle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdVoyageNavigation.Id)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Editer</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Détails</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Supprimer</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

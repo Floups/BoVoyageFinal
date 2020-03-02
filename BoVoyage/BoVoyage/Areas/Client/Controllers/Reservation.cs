@@ -72,7 +72,7 @@ namespace BoVoyage.Areas.Client.Controllers
             foreach (var item in prixParVoyageur)
             {
                 prixTva += item;
-                Tva(prixTva);
+                prixTva = Tva(prixTva);
             }
             
             ViewBag.PrixParVoyageur = prixParVoyageur;
@@ -94,6 +94,12 @@ namespace BoVoyage.Areas.Client.Controllers
             voyageurs.RemoveAt(idVoyageur);
             HttpContext.Session.Set("voyageurs", voyageurs);
             return RedirectToAction(nameof(Index), new { idVoyage, nbPersonnes = nbPersonnes-1 });
+        }
+
+        public IActionResult Paiement(double prix, int idVoyage)
+        {
+            ViewBag.Prix = prix;
+            return View();
         }
 
 

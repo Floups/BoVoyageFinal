@@ -115,7 +115,7 @@
                     </tbody>
                 </table>
                 <p class="card-text"></p>
-                <a href="#" class="btn btn-primary">Paiement</a>
+                <a asp-action="Paiement" asp-route-prix="@ViewBag.PrixTva" asp-route-idVoyage="@Model.Voyage.Id" class="btn btn-primary">Paiement</a>
             </div>
         </div>
     </div>

@@ -23,11 +23,15 @@
         </div>
 
         <div class="col-3">
-            <button class="btn btn-primary" type="submit">Filtrer</button>
-            <a class="btn btn-primary" asp-action="Index"> Effacer filtre </a>
+            <button class="btn btn-primary m-1" type="submit">Filtrer</button><br/>
+            <a class="btn btn-primary m-1" asp-action="Index"> Effacer filtre </a>
+        </div>
+        <div class="col-3">
+            <a class="btn btn-primary" asp-action="TelechargerXML">Télécharger détails clients </a>
         </div>
     </div>
 </form>
+
 
 <table class="table">
     <thead>
@@ -105,9 +109,9 @@
                 </td>
 
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Editer</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Détails</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Supprimer</a>
                 </td>
             </tr>
         }

@@ -32,13 +32,15 @@ Go
 ALTER TABLE Destination ADD Constraint Destination_Pk PRIMARY KEY (Id)
  Go
 
+ drop table Dossierresa
 CREATE TABLE Dossierresa 
     ( Id INTEGER NOT NULL IDENTITY , 
      NumeroCB VARCHAR (16) , 
      IdClient INTEGER NOT NULL , 
      IdEtatDossier TINYINT NOT NULL , 
      IdVoyage INTEGER NOT Null,
-	 PrixTotal DECIMAL(18,2) Not Null ) 
+	 PrixTotal decimal(10,2) Not Null,
+	 Assurance bit Not Null ) 
 Go
 
 ALTER TABLE DossierResa ADD Constraint Dossierresa_Pk PRIMARY KEY (Id)

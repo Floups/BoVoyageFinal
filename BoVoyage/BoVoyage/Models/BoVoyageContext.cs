@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using BoVoyage.Areas.Client.Models;
+using BoVoyage.Areas.Office.Models;
 
 namespace BoVoyage.Models
 {
@@ -81,6 +82,16 @@ namespace BoVoyage.Models
                     .HasForeignKey(d => d.IdVoyage)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("Dossierresa_Voyage_Fk");
+
+                entity.Property(e => e.PrixTotal)
+                    .HasColumnName("PrixTotal")
+                    .IsRequired()
+                    .HasColumnType("decimal(10,2)");
+
+                entity.Property(e => e.Assurance)
+                   .HasColumnName("Assurance")
+                   .IsRequired()
+                   .HasColumnType("bit");
             });
 
             modelBuilder.Entity<Etatdossier>(entity =>
@@ -172,6 +183,9 @@ namespace BoVoyage.Models
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+
+        //public DbSet<BoVoyage.Areas.Office.Models.ReservationVoyagesViewModel> ReservationVoyagesViewModel { get; set; }
 
         //public DbSet<BoVoyage.Areas.Client.Models.VoyagePersonnesViewModel> VoyagePersonnesViewModel { get; set; }
     }

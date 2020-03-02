@@ -25,10 +25,10 @@ namespace BoVoyage.Controllers
 
         public IActionResult Index()
         {
-            var voyagesMoinsCher =  _context.Voyage.OrderBy(v => v.PrixHt).Take(5).Include(v => v.IdDestinationNavigation).ThenInclude(d => d.Photo).ToList();
+            var voyagesMoinsCher = _context.Voyage.OrderBy(v => v.PrixHt).Take(5).Include(v => v.IdDestinationNavigation).ThenInclude(d => d.Photo).ToList();
             ViewBag.VoyagesMoinsCher = voyagesMoinsCher;
 
-            ViewBag.VoyagesDateProche =  _context.Voyage.OrderBy(v => v.DateDepart).Take(5).Include(v => v.IdDestinationNavigation).ThenInclude(d => d.Photo).ToList();
+            ViewBag.VoyagesDateProche = _context.Voyage.OrderBy(v => v.DateDepart).Take(5).Include(v => v.IdDestinationNavigation).ThenInclude(d => d.Photo).ToList();
 
             var idRegionNbvoyage = new List<int>();
             var regionNbVoyage = new List<Destination>();
@@ -45,18 +45,18 @@ namespace BoVoyage.Controllers
                 {
                     while (sdr.Read())
                     {
-                        idRegionNbvoyage.Add((int)sdr["IdDestination"]);                        
+                        idRegionNbvoyage.Add((int)sdr["IdDestination"]);
                     }
 
                 }
                 foreach (var item in idRegionNbvoyage)
                 {
-                    regionNbVoyage.Add(_context.Destination.Include(d => d.Photo).Where(d => d.Id == item).FirstOrDefault());                    
+                    regionNbVoyage.Add(_context.Destination.Include(d => d.Photo).Where(d => d.Id == item).FirstOrDefault());
                 }
             }
-           
+
             ViewBag.RegionNbVoyage = regionNbVoyage;
-            return View();            
+            return View();
         }
 
         public IActionResult AProposDe()
@@ -74,33 +74,34 @@ namespace BoVoyage.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Civilite", "Nom", "Prenom", "Telephone", "Email", "SujetMessage", "Message")] ContactViewModel newContact)
         {
-            var pers = _context.Personne.Where(p => p.Email == newContact.Email).FirstOrDefault();
-
-            if (pers == null)
+            if (ModelState.IsValid)
             {
-                Personne personne = new Personne()
+                var pers = _context.Personne.Where(p => p.Email == newContact.Email).FirstOrDefault();
+                if (pers == null)
                 {
-                    Civilite = newContact.Civilite,
-                    Nom = newContact.Nom,
-                    Prenom = newContact.Prenom,
-                    Telephone = newContact.Telephone,
-                    Email = newContact.Email,
-                    TypePers = 3
-                };
+                    Personne personne = new Personne()
+                    {
+                        Civilite = newContact.Civilite,
+                        Nom = newContact.Nom,
+                        Prenom = newContact.Prenom,
+                        Telephone = newContact.Telephone,
+                        Email = newContact.Email,
+                        TypePers = 3
+                    };
 
-                if (ModelState.IsValid)
-                {
                     _context.Personne.Add(personne);
                     await _context.SaveChangesAsync();
 
-                    //return RedirectToAction(nameof(Contact));
+                    //return RedirectToAction(nameof(Index));
                 }
+                if (newContact.SujetMessage != null && newContact.Message != null)
+                    ViewBag.Valid = "Le message a bien été envoyé.";
+
             }
-            if (ModelState.IsValid && newContact.SujetMessage != null && newContact.Message != null)
-                ViewBag.Valid = "Le message a bien été envoyé.";
+
+
             return View("Contact", newContact);
         }
-
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

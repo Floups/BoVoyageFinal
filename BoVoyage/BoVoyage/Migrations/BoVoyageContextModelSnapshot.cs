@@ -37,6 +37,7 @@ namespace BoVoyage.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(500)")
                         .HasMaxLength(500);
 
@@ -78,13 +79,14 @@ namespace BoVoyage.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("NumeroCb")
+                        .IsRequired()
                         .HasColumnName("NumeroCB")
                         .HasColumnType("varchar(16)")
                         .HasMaxLength(16)
                         .IsUnicode(false);
 
-                    b.Property<double>("PrixTotalResa")
-                        .HasColumnType("float");
+                    b.Property<float>("PrixTotal")
+                        .HasColumnType("real");
 
                     b.HasKey("Id");
 

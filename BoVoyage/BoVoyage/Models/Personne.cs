@@ -53,6 +53,7 @@ namespace BoVoyage.Models
         [XmlIgnore]
         [Display(Name = "Date de naissance")]
         [DataType(DataType.Date)]
+        [Required(ErrorMessage ="Champ requis.")]
         public DateTime? Datenaissance { get; set; }
         
         [XmlIgnore]

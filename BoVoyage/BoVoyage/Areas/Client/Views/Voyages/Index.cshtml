@@ -11,49 +11,60 @@
 
 
 <div class="row justify-content-center">
-    <div class="col-md-2">
-        <form asp-controller="Voyages" asp-action="Index" method="get">
-            <label>Destination</label>
-            <div>
-                <select class="form-control"  name="dest" asp-items="@ViewBag.Destinations">
-                    <option value="0" selected>Aucun</option>
-                </select>
-            </div>
+    <div class="col-md-9 mb-3">
+        <div class="card">
+            <div class="card-body">
 
+                <form asp-controller="Voyages" asp-action="Index" method="get">
+                    <label>Destination</label>
+                    <div>
+                        <select class="form-control" name="dest" asp-items="@ViewBag.Destinations">
+                            <option value="0" selected>Aucun</option>
+                        </select>
+                    </div>
 
-            <label>Fourchette de prix</label>
-            <div class="input-group mb-1">
-                <label class="col-sm-2 col-form-label">De</label>
-                <input class="form-control" name="prixMin" min="0" placeholder="Prix Min" value="@ViewBag.PrixMin" />
-                <div class="input-group-append">
-                    <span class="input-group-text">€</span>
-                </div>
-            </div>
-            <div class="input-group mb-1">
-                <label class="col-sm-2 col-form-label">A</label>
-                <input class="form-control" name="prixMax" min="0" placeholder="Prix Max" value="@ViewBag.PrixMax" />
-                <div class="input-group-append">
-                    <span class="input-group-text">€</span>
-                </div>
-            </div>
+                    <div class="form-row mt-3">
+                        <div class="form-group col">
+                            <h6>Fourchette de prix</h6>
+                            <div class="input-group mb-1">
+                                <label class="col-sm-2 col-form-label">De</label>
+                                <input class="form-control" name="prixMin" min="0" placeholder="Prix Min" value="@ViewBag.PrixMin" />
+                                <div class="input-group-append">
+                                    <span class="input-group-text">€</span>
+                                </div>
+                            </div>
+                            <div class="input-group mb-1">
+                                <label class="col-sm-2 col-form-label">A</label>
+                                <input class="form-control" name="prixMax" min="0" placeholder="Prix Max" value="@ViewBag.PrixMax" />
+                                <div class="input-group-append">
+                                    <span class="input-group-text">€</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col">
+                            <h6>Fourchette de date de départ</h6>
+                            <div class="input-group mb-1">
+                                <label class="col-sm-2 col-form-label">Du</label>
+                                <input class="form-control" type="date" name="dateMin" value="@ViewBag.DateMin" />
+                            </div>
+                            <div class="input-group mb-1">
+                                <label class="col-sm-2 col-form-label">Au</label>
+                                <input class="form-control" type="date" name="dateMax" value="@ViewBag.DateMax" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group d-flex justify-content-center">
 
-            <label>Fourchette de date de départ</label>
-            <div class="input-group mb-1">
-                <label class="col-sm-2 col-form-label">Du</label>
-                <input class="form-control" type="date" name="dateMin" value="@ViewBag.DateMin" />
+                        <button class="btn btn-primary mr-3" type="submit">Filtrer</button>
+                        <a class="btn btn-primary ml-3" asp-action="Index"> Effacer filtre </a>
+                    </div>
+                </form>
             </div>
-            <div class="input-group mb-1">
-                <label class="col-sm-2 col-form-label">Au</label>
-                <input class="form-control" type="date" name="dateMax" value="@ViewBag.DateMax" />
-            </div>    
-
-                <button class="btn btn-primary" type="submit">Filtrer</button>
-                <a class="btn btn-primary" asp-action="Index"> Effacer filtre </a>
-        </form>
+        </div>
     </div>
-    
 
-    <div class="col-md-10">
+
+    <div class="col-md-11">
         <div class="card-columns">
 
             @foreach (var voyage in Model)

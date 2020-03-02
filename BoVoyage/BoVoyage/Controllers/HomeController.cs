@@ -85,7 +85,7 @@ namespace BoVoyage.Controllers
                         Prenom = newContact.Prenom,
                         Telephone = newContact.Telephone,
                         Email = newContact.Email,
-                        TypePers = 3
+                        TypePers = 3,                        Datenaissance = new DateTime().Date
                     };
 
                     _context.Personne.Add(personne);

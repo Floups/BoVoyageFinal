@@ -11,7 +11,14 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-dark border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand text-light" asp-area="" asp-controller="Home" asp-action="Index">BoVoyage</a>
+                @if (User.IsInRole("Manager") || User.IsInRole("Admin"))
+                {
+                    <a class="navbar-brand text-light" asp-area="Office" asp-controller="Dashboard" asp-action="Index">BoVoyage</a>
+                }
+                else
+                {
+                    <a class="navbar-brand text-light" asp-area="" asp-controller="Home" asp-action="Index">BoVoyage</a>
+                }
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -75,7 +82,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col text-center font-weight-bold text-wrap height">
-                    &copy; 2020 - BoVoyage - Projet GTM Ingenierie<br/> 
+                    &copy; 2020 - BoVoyage - Projet GTM Ingenierie<br />
                     Florentin DEROSNE - Dorian GUILLAUME - Aurore LÊ
                 </div>
             </div>

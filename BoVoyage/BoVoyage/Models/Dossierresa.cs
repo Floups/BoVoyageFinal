@@ -27,7 +27,11 @@ namespace BoVoyage.Models
 
         [Display(Name = "Prix total")]
         [Required(ErrorMessage = "Champ requis.")]
+        [DataType(DataType.Currency)]
         public decimal PrixTotal { get; set; }
+
+        [Required(ErrorMessage = "Champ requis.")]
+        public bool Assurance { get; set; }
 
         [Display(Name = "IdClient")]
         public virtual Client IdClientNavigation { get; set; }

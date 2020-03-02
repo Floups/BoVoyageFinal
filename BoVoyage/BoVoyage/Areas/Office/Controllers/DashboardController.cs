@@ -56,7 +56,7 @@ namespace BoVoyage.Areas.Office.Controllers
                 var resa = await _context.Dossierresa
                  .Include(d => d.IdVoyageNavigation).ThenInclude(v => v.IdDestinationNavigation)
                  .Include(r => r.IdEtatDossierNavigation)
-                 .Include(r => r.IdClientNavigation)
+                 .Include(r => r.IdClientNavigation).ThenInclude(c=>c.IdNavigation)
                  .FirstOrDefaultAsync(r => r.Id == id);
                 elmtDashboard.Reservations.Add(resa);
             }

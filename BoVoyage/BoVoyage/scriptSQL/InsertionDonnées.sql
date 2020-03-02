@@ -16,6 +16,8 @@ insert @destination values
 (null, 'Japon', 2,'Le Japon est un pays insulaire situé dans l''océan Pacifique. Il comporte des villes denses, des palais impériaux, des parcs nationaux montagneux ainsi que des milliers de temples et de sanctuaires. Les trains à grande vitesse Shinkansen relient les îles principales de Kyūshū (avec les plages subtropicales d''Okinawa), Honshū (où se trouvent Tokyo et le mémorial en hommage aux victimes du bombardement atomique d''Hiroshima) et Hokkaidō (prisée pour le ski). Tokyo, la capitale, est réputée pour ses gratte-ciel, ses magasins et sa culture populaire.'),
 (null, 'Vietnam', 2,'Le Vietnam est un pays d''Asie du Sud-Est sur la mer de Chine méridionale. Il est connu pour ses plages, ses cours d''eau, ses pagodes bouddhistes et ses villes animées. Hanoï, la capitale, rend hommage à Hô Chi Minh, l''emblématique dirigeant de la nation à l''ère communiste, avec un immense mausolée en marbre. Hô-Chi-Minh-Ville (anciennement Saigon) possède des sites d''intérêt de l''époque coloniale française, ainsi que des musées d''histoire sur la guerre du Vietnam et les tunnels de Củ Chi, utilisés par les soldats Viêt-cong.')
 
+insert Destination select * from @destination
+
 
 
 declare @voyage as table(
@@ -48,6 +50,8 @@ insert @voyage values
 (8,DATEADD(day,51,GETDATE()),DATEADD(day,58,GETDATE()),4,799,0.30, 'Venez vous recueillir à Kyoto, dans le sanctuaire Fushimi Inari taisha, qui doit en partie sa renommée aux milliers de torii (portails traditionnels) qui guident les fidèles sur plusieurs kilomètres. Les sanctuaires et temples de Nikko sont aussi sacrés. Inscrit au patrimoine mondial de l’UNESCO, la spiritualité et la nature s’enchevêtrent dans ce complexe religieux, niché au cœur de la forêt.'),
 (9,DATEADD(day,5,GETDATE()),DATEADD(day,12,GETDATE()),4,799,0.30, 'Un parcours dense et contrasté au Vietnam, du Nord au Sud : ses paysages mythiques, de la baie d''Halong aux villes historiques du Centre, jusqu''à la vie presque amphibie du delta du Mékong où se mêlent vergers et cocoteraies ; ses prestigieux témoins d''un riche passé, des temples confucéens du Nord aux étranges églises coloniales du Sud ; ses capitales au charme indicible où s''expose le nouveau visage d''un pays en pleine mutation.')
 
+insert Voyage select * from @voyage
+
 
 
 declare @photos as table(
@@ -72,6 +76,8 @@ insert @photos values
 ('vietnam_1.jpg', 9),
 ('vietnam_2.png', 9)
 
+insert Photo select * from @photos
+
 declare @personne as table(
 TypePers int,
 Civilite nvarchar(100),
@@ -91,6 +97,8 @@ insert @personne values
 
 insert Personne select * from @personne
 
+insert Client select Id from Personne where TypePers = 1
+
 declare @etatDossier as table(
 Id int,
 Libelle nvarchar(30)
@@ -109,22 +117,18 @@ NumeroCB varchar(16),
 IdClient int,
 IdEtatDossier int,
 IdVoyage int,
-PrixTotal decimal
+PrixTotal decimal(10,2),
+Assurance bit
 )
 
 insert @dossierresa values
-(1234567891234567, 1, 2, 1, 100.12),
-(1234567891234568, 5, 2, 2, 200.12)
+(1234567891234567, 1, 2, 1, 100.12,0),
+(1234567891234568, 5, 2, 2, 200.12,1)
 
 insert Dossierresa select * from @dossierresa
 
 
 
-insert Destination select * from @destination
 
-insert Voyage select * from @voyage
 
-insert Photo select * from @photos
-
-insert Client select Id from Personne where TypePers = 1
 

@@ -4,73 +4,93 @@
     ViewData["Title"] = "Contact";
 }
 
-<h1>@ViewData["Title"]</h1>
+<h1 class="text-center mb-3">@ViewData["Title"]</h1>
 
-<div class="text-justify">
-    <p>
-        BoVoyage dispose d'un service par téléphone ouvert au public de 8h à 20h du lundi
-        au vendredi.<br /><br />
-        <strong>Téléphone:</strong> 01.23.45.67.89<br /><br />
-        <strong>Adresse: </strong> 5 Villa de Lourcine, 75014 Paris
-    </p>
+<div class="row justify-content-center mb-3">
+    <div class="col-md-9">
+        <div class="card">
+            <div class="card-body">
+                <p>
+                    BoVoyage dispose d'un service par téléphone ouvert au public de 8h à 20h du lundi
+                    au vendredi.<br /><br />
+                    <strong>Téléphone:</strong> 01.23.45.67.89<br /><br />
+                    <strong>Adresse: </strong> 5 Villa de Lourcine, 75014 Paris
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row mb-3 justify-content-center">
+    <div class="col-md-9">
+        <div class="card">
+            <div class="card-body">
+
+                @if (ViewBag.Valid == null)
+                {<p><strong>Vous pouvez aussi envoyer un message <em>via</em> le formulaire suivant </strong></p>
+                    <div>
+                        <form asp-action="Create">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-row">
+                                <div class="form-group col">
+                                    <label asp-for="Civilite" class="control-label"></label>
+                                    <select asp-for="Civilite" class="form-control mr-sm-2 mb-2">
+                                        <option value="Mr">Monsieur</option>
+                                        <option value="Mme">Madame</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col">
+                                    <label asp-for="Nom" class="control-label"></label>
+                                    <input asp-for="Nom" class="form-control" />
+                                    <span asp-validation-for="Nom" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col">
+                                    <label asp-for="Prenom" class="control-label"></label>
+                                    <input asp-for="Prenom" class="form-control" />
+                                    <span asp-validation-for="Prenom" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-row">
+
+                                <div class="form-group col">
+                                    <label asp-for="Telephone" class="control-label"></label>
+                                    <input asp-for="Telephone" class="form-control" />
+                                    <span asp-validation-for="Telephone" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col">
+                                    <label asp-for="Email" class="control-label"></label>
+                                    <input asp-for="Email" class="form-control" />
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="SujetMessage" class="control-label"></label>
+                                <input asp-for="SujetMessage" class="form-control" />
+                                <span asp-validation-for="SujetMessage" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Message" class="control-label"></label>
+                                <textarea asp-for="Message" class="form-control" rows="10"></textarea>
+                                <span asp-validation-for="Message" class="text-danger"></span>
+                            </div>
+                            <div class="form-group d-flex justify-content-center">
+                                <input type="submit" value="Envoyer" class="btn btn-primary" />
+                            </div>
+                        </form>
+                    </div>}
+
+                @if (ViewBag.Valid != null)
+                {
+                    <div class="card">
+                        <p><strong>Sujet</strong></p>
+                        <p>@Model.SujetMessage</p>
+                        <p><strong>Message</strong></p>
+                        <p>@Model.Message</p>
+                    </div>
+                    @ViewBag.Valid
+
+                }
+            </div>
+        </div>
+    </div>
 </div>
 
-@if(ViewBag.Valid == null)
-{<p><strong>Vous pouvez aussi envoyer un message <em>via</em> le formulaire suivant </strong></p>
-    <div>
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Civilite" class="control-label"></label>
-                <select asp-for="Civilite" class="form-control mr-sm-2 mb-2">
-                    <option value="Mr">Monsieur</option>
-                    <option value="Mme">Madame</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label asp-for="Nom" class="control-label"></label>
-                <input asp-for="Nom" class="form-control" />
-                <span asp-validation-for="Nom" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Prenom" class="control-label"></label>
-                <input asp-for="Prenom" class="form-control" />
-                <span asp-validation-for="Prenom" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Telephone" class="control-label"></label>
-                <input asp-for="Telephone" class="form-control" />
-                <span asp-validation-for="Telephone" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SujetMessage" class="control-label"></label>
-                <input asp-for="SujetMessage" class="form-control" />
-                <span asp-validation-for="SujetMessage" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Message" class="control-label"></label>
-                <textarea asp-for="Message" class="form-control"></textarea>
-                <span asp-validation-for="Message" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Envoyer" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>}
-
-@if (ViewBag.Valid != null)
-{
-    <div class="card">
-        <p><strong>Sujet</strong></p>
-        <p>@Model.SujetMessage</p>
-        <p><strong>Message</strong></p>
-        <p>@Model.Message</p>
-    </div>
-    @ViewBag.Valid
-
-}

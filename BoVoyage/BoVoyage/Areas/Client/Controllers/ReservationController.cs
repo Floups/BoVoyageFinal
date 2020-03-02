@@ -143,13 +143,19 @@ namespace BoVoyage.Areas.Client.Controllers
 
                 foreach(var voyageur in HttpContext.Session.Get<List<Personne>>("voyageurs"))
                 {
-                    if (!_context.Personne.Where(p => p.Email == voyageur.Email).Any())
+                    if (voyageur.Nom != null)
                     {
-                        voyageur.TypePers = 2;
-                        _context.Personne.Add(voyageur);
-                    }
 
+                        if (!_context.Personne.Where(p => p.Email == voyageur.Email).Any())
+                        {
+                            voyageur.TypePers = 2;
+                            _context.Personne.Add(voyageur);
+                        }
+                        await _context.SaveChangesAsync();
+                        _context.Voyageur.Add(new Voyageur() { Id = voyageur.Id, Idvoyage = HttpContext.Session.Get<int>("idVoyage") });
+                    }
                 }
+                _context.Voyageur.Add(new Voyageur() { Id = personne.Id, Idvoyage = HttpContext.Session.Get<int>("idVoyage") });
                 var dossier = new Dossierresa() { NumeroCb = dossierresa.NumeroCb, IdClient = personne.Id, IdEtatDossier = 2, IdVoyage = HttpContext.Session.Get<int>("idVoyage"), PrixTotal = HttpContext.Session.Get<decimal>("prix") };
                 _context.Personne.Update(personne);
                 _context.Dossierresa.Add(dossier);

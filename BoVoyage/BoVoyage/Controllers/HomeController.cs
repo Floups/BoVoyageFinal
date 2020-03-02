@@ -64,10 +64,9 @@ namespace BoVoyage.Controllers
             return View();
         }
 
-        public IActionResult Contact(ContactViewModel newContact)
+        public IActionResult Contact()
         {
-
-            return View(newContact);
+            return View();
         }
 
         [HttpPost]

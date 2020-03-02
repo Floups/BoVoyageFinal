@@ -26,7 +26,8 @@
             <div class="card-body">
 
                 @if (ViewBag.Valid == null)
-                {<p><strong>Vous pouvez aussi envoyer un message <em>via</em> le formulaire suivant </strong></p>
+                {
+                    <p><strong>Vous pouvez aussi envoyer un message <em>via</em> le formulaire suivant </strong></p>
                     <div>
                         <form asp-action="Create">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -76,7 +77,8 @@
                                 <input type="submit" value="Envoyer" class="btn btn-primary" />
                             </div>
                         </form>
-                    </div>}
+                    </div>
+                }
 
                 @if (ViewBag.Valid != null)
                 {

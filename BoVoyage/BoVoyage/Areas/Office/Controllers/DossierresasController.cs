@@ -47,33 +47,6 @@ namespace BoVoyage.Areas.Office.Controllers
             return View(dossierresa);
         }
 
-        // GET: Office/Dossierresas/Create
-        public IActionResult Create()
-        {
-            ViewData["IdClient"] = new SelectList(_context.Client, "Id", "Id");
-            ViewData["IdEtatDossier"] = new SelectList(_context.Etatdossier, "Id", "Libelle");
-            ViewData["IdVoyage"] = new SelectList(_context.Voyage, "Id", "Id");
-            return View();
-        }
-
-        // POST: Office/Dossierresas/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,NumeroCb,IdClient,IdEtatDossier,IdVoyage,PrixTotal")] Dossierresa dossierresa)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(dossierresa);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["IdClient"] = new SelectList(_context.Client, "Id", "Id", dossierresa.IdClient);
-            ViewData["IdEtatDossier"] = new SelectList(_context.Etatdossier, "Id", "Libelle", dossierresa.IdEtatDossier);
-            ViewData["IdVoyage"] = new SelectList(_context.Voyage, "Id", "Id", dossierresa.IdVoyage);
-            return View(dossierresa);
-        }
 
         // GET: Office/Dossierresas/Edit/5
         public async Task<IActionResult> Edit(int? id)

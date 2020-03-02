@@ -14,6 +14,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using BoVoyage.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
+using System.Web.Mvc;
 
 namespace BoVoyage
 {
@@ -108,7 +110,6 @@ namespace BoVoyage
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
-
         }
     }
 }

@@ -25,7 +25,10 @@
             </div>
             <div class="form-group">
                 <label asp-for="Niveau" class="control-label"></label>
-                <input asp-for="Niveau" class="form-control" />
+                <select asp-for="Niveau" class="form-control">
+                    <option value="3">Region</option>
+                    <option value="2">Pays</option>
+                </select>
                 <span asp-validation-for="Niveau" class="text-danger"></span>
             </div>
             <div class="form-group">

@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BoVoyage.Models;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
+using BoVoyage.Data;
 
 namespace BoVoyage.Areas.Client.Controllers
 {
@@ -14,16 +16,16 @@ namespace BoVoyage.Areas.Client.Controllers
     public class PersonnesController : Controller
     {
         private readonly BoVoyageContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly ApplicationDbContext _contextApp;
+        private readonly SignInManager<IdentityUser> _signInManager;
 
-        public PersonnesController(BoVoyageContext context)
+        public PersonnesController(BoVoyageContext context, UserManager<IdentityUser> userManager, ApplicationDbContext contextApp,SignInManager<IdentityUser> signInManager)
         {
             _context = context;
-        }
-
-        // GET: Client/Personnes
-        public async Task<IActionResult> Index()
-        {
-            return View(await _context.Personne.ToListAsync());
+            _userManager = userManager;
+            _contextApp = contextApp;
+            _signInManager = signInManager;
         }
 
         // GET: Client/Personnes/Details/5
@@ -108,6 +110,12 @@ namespace BoVoyage.Areas.Client.Controllers
                 {
                     _context.Update(personne);
                     await _context.SaveChangesAsync();
+                    var user = await _contextApp.Users.Where(u=>u.Email==User.FindFirstValue(ClaimTypes.Name)).SingleOrDefaultAsync();
+                    user.Email = personne.Email;
+                    user.UserName = personne.Email;
+                    user.PhoneNumber = personne.Telephone;
+                    await _userManager.UpdateAsync(user);
+                    await _signInManager.SignInAsync(user, true);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -120,38 +128,9 @@ namespace BoVoyage.Areas.Client.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details");
             }
             return View(personne);
-        }
-
-        // GET: Client/Personnes/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var personne = await _context.Personne
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (personne == null)
-            {
-                return NotFound();
-            }
-
-            return View(personne);
-        }
-
-        // POST: Client/Personnes/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var personne = await _context.Personne.FindAsync(id);
-            _context.Personne.Remove(personne);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
         }
 
         private bool PersonneExists(int id)

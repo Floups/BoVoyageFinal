@@ -55,7 +55,7 @@
                                     <label asp-for="Voyageurs[i].Datenaissance" class="control-label"></label>
                                     <input asp-for="Voyageurs[i].Datenaissance" class="form-control" />
                                     <span asp-validation-for="Voyageurs[i].Datenaissance" class="text-danger"></span>
-                                </div>                                
+                                </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col">
@@ -91,8 +91,20 @@
 
                 </section>
                 <section class="d-flex justify-content-center">
-
-                    <a asp-action="Index" asp-route-idVoyage="@Model.Voyage.Id" asp-route-nbPersonnes="@(Model.Voyageurs.Count() + 1)" class="btn btn-primary">Ajouter un Voyageur</a>
+                    @if (Model.Voyageurs.Count() + 1 < 10 && Model.Voyage.PlacesDispo > Model.Voyageurs.Count() + 1)
+                    {
+                        if (Model.Voyageurs.Any())
+                        {
+                            if (Model.Voyageurs.Last().Nom != null && Model.Voyageurs.Last().Prenom != null && Model.Voyageurs.Last().Email != null && Model.Voyageurs.Last().Datenaissance != null)
+                            {
+                                <a asp-action="Index" asp-route-idVoyage="@Model.Voyage.Id" asp-route-nbPersonnes="@(Model.Voyageurs.Count() + 1)" class="btn btn-primary">Ajouter un Voyageur</a>
+                            }
+                        }
+                        else
+                        {
+                            <a asp-action="Index" asp-route-idVoyage="@Model.Voyage.Id" asp-route-nbPersonnes="@(Model.Voyageurs.Count() + 1)" class="btn btn-primary">Ajouter un Voyageur</a>
+                        }
+                    }
                 </section>
             </div>
         </div>
@@ -109,6 +121,7 @@
                     <li><span class="font-weight-bold">Destination : </span>@Model.Voyage.IdDestinationNavigation.Nom</li>
                     <li><span class="font-weight-bold">Date Départ : </span>@Html.DisplayFor(m => Model.Voyage.DateDepart)</li>
                     <li><span class="font-weight-bold">Date Retour : </span>@Html.DisplayFor(m => Model.Voyage.DateRetour)</li>
+                    <li><span class="font-weight-bold">Nombres de Places : </span>@(Model.Voyageurs.Count + 1) / @Html.DisplayFor(m => Model.Voyage.PlacesDispo)</li>
                 </ul>
                 <h5 class="card-title">Prix</h5>
                 <table class="table">
@@ -130,7 +143,7 @@
                                 <td scope="row">@Model.Voyageurs[i].Nom</td>
                                 <td>@ViewBag.PrixParVoyageur[i]</td>
                             </tr>
-                        }                       
+                        }
                         <tr>
                             <th scope="row"></th>
                             <th>TOTAL avec TVA (20%)</th>
@@ -140,7 +153,7 @@
                             <th>@ViewBag.PrixTva €</th>
                         </tr>
                     </tbody>
-                </table>                
+                </table>
             </div>
             <div class="card-footer d-flex justify-content-center">
                 <a asp-action="Paiement" class="btn btn-primary">Paiement</a>

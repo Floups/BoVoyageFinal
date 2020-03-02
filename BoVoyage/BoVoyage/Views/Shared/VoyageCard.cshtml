@@ -6,7 +6,7 @@
 }
 <div class="">
     <div class="card m-3">
-        @if (@Model.IdDestinationNavigation.Photo.First() == null)
+        @if (!@Model.IdDestinationNavigation.Photo.Any())
         {
             <img src="~/img/no_result.jpg" class="card-img-top" alt="">
         }

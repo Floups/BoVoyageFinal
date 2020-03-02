@@ -1,4 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Clients xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Personne Nom="Dupont" Prenom="Jeanette" Email="j-d@msn.com" />
-</Clients>
+<Clients xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />

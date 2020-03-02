@@ -160,9 +160,13 @@ namespace BoVoyage.Areas.Client.Controllers
                 var dossier = new Dossierresa() { NumeroCb = dossierresa.NumeroCb, IdClient = personne.Id, IdEtatDossier = 2, IdVoyage = HttpContext.Session.Get<int>("idVoyage"), PrixTotal = HttpContext.Session.Get<decimal>("prix") };
                 _context.Personne.Update(personne);
                 _context.Dossierresa.Add(dossier);
+                var voyage = await _context.Voyage.FindAsync(HttpContext.Session.Get<int>("idVoyage"));
+                voyage.PlacesDispo = voyage.PlacesDispo - (HttpContext.Session.Get<List<Personne>>("voyageurs").Count() + 1);
+                _context.Voyage.Update(voyage);
                 await _context.SaveChangesAsync();
                 return View();
             }
+            ViewBag.Prix = HttpContext.Session.Get<double>("prix");
             return View("Paiement",dossierresa);
         }
     }

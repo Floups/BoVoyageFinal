@@ -35,6 +35,7 @@ namespace BoVoyage.Models
         public decimal PrixHt { get; set; }
 
         [Display(Name = "Taux de réduction")]
+        [Range(0.0, 1.0, ErrorMessage ="Veuillez entrer un nombre entre 0 et 1.")]
         [Required(ErrorMessage = "Champ requis.")]
         public decimal Reduction { get; set; }
 

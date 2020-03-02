@@ -42,7 +42,7 @@
     </section>
     <h2 class="text-center">Région avec le plus de Voyages</h2>
     <section id="regionNbVoyage" class="accueilCard d-flex flex-lg-nowrap flex-wrap justify-content-lg-around justify-content-center">
-        @for (int i = 0; i < 5; i++)
+        @for (int i = 0; i < (ViewBag.RegionNbVoyage.Count>5 ? 5 : ViewBag.RegionNbVoyage.Count); i++)
         {
             string[] descriptionMinim = @ViewBag.RegionNbVoyage[i].Description.Split(' ', 20);
             descriptionMinim[descriptionMinim.Length - 1] = " ...";

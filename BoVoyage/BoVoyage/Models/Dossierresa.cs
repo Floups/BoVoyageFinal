@@ -11,6 +11,7 @@ namespace BoVoyage.Models
 
         [Display(Name = "Numéro carte bancaire")]
         [Required(ErrorMessage = "Champ requis.")]
+        [CreditCard (ErrorMessage = "Carte bancaire non reconnue.")]
         public string NumeroCb { get; set; }
 
         [Display(Name = "IdClient")]

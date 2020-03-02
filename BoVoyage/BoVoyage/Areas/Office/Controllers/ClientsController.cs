@@ -6,10 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BoVoyage.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BoVoyage.Areas.Office.Controllers
 {
     [Area("Office")]
+    [Authorize(Roles = "Admin, Manager")]
     public class ClientsController : Controller
     {
         private readonly BoVoyageContext _context;
@@ -24,7 +26,7 @@ namespace BoVoyage.Areas.Office.Controllers
         {
             ViewBag.Nom = nom;
 
-            IQueryable<Models.Client> clients = _context.Client.Include(c => c.IdNavigation);
+            IQueryable<BoVoyage.Models.Client> clients = _context.Client.Include(c => c.IdNavigation);
 
             if (nom != null)
                 clients = clients.Where(c => c.IdNavigation.Nom.Contains(nom));
@@ -53,19 +55,20 @@ namespace BoVoyage.Areas.Office.Controllers
             return View(client);
         }
 
+        [Authorize(Roles = "Admin")]
         // GET: Office/Clients/Create
         public IActionResult Create()
         {
             ViewData["Id"] = new SelectList(_context.Personne, "Id", "Civilite");
             return View();
         }
-
+        [Authorize(Roles = "Admin")]
         // POST: Office/Clients/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id")] Models.Client client)
+        public async Task<IActionResult> Create([Bind("Id")] BoVoyage.Models.Client client)
         {
             if (ModelState.IsValid)
             {
@@ -76,7 +79,7 @@ namespace BoVoyage.Areas.Office.Controllers
             ViewData["Id"] = new SelectList(_context.Personne, "Id", "Civilite", client.Id);
             return View(client);
         }
-
+        [Authorize(Roles = "Admin")]
         // GET: Office/Clients/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -93,13 +96,13 @@ namespace BoVoyage.Areas.Office.Controllers
             ViewData["Id"] = new SelectList(_context.Personne, "Id", "Civilite", client.Id);
             return View(client);
         }
-
+        [Authorize(Roles = "Admin")]
         // POST: Office/Clients/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id")] Models.Client client)
+        public async Task<IActionResult> Edit(int id, [Bind("Id")] BoVoyage.Models.Client client)
         {
             if (id != client.Id)
             {
@@ -129,7 +132,7 @@ namespace BoVoyage.Areas.Office.Controllers
             ViewData["Id"] = new SelectList(_context.Personne, "Id", "Civilite", client.Id);
             return View(client);
         }
-
+        [Authorize(Roles = "Admin")]
         // GET: Office/Clients/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -148,7 +151,7 @@ namespace BoVoyage.Areas.Office.Controllers
 
             return View(client);
         }
-
+        [Authorize(Roles = "Admin")]
         // POST: Office/Clients/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

@@ -8,7 +8,7 @@ namespace BoVoyage.Areas.Client.Models
 {
     public class VoyagePersonnesViewModel
     {
-        public int Id { get; set; }
+        //public int Id { get; set; }
 
         public Voyage Voyage { get; set; }
 

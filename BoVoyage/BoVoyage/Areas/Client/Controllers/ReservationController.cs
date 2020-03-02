@@ -130,7 +130,7 @@ namespace BoVoyage.Areas.Client.Controllers
             return prixParVoyageur;
         }
 
-        public async Task<IActionResult> ValiderResa(string cb)
+        public async Task<IActionResult> ValiderResa(Dossierresa dossierresa)
         {
             if (ModelState.IsValid)
             {
@@ -150,13 +150,13 @@ namespace BoVoyage.Areas.Client.Controllers
                     }
 
                 }
-                var dossier = new Dossierresa() { NumeroCb = cb, IdClient = personne.Id, IdEtatDossier = 2, IdVoyage = HttpContext.Session.Get<int>("idVoyage"), PrixTotal = HttpContext.Session.Get<decimal>("prix") };
+                var dossier = new Dossierresa() { NumeroCb = dossierresa.NumeroCb, IdClient = personne.Id, IdEtatDossier = 2, IdVoyage = HttpContext.Session.Get<int>("idVoyage"), PrixTotal = HttpContext.Session.Get<decimal>("prix") };
                 _context.Personne.Update(personne);
                 _context.Dossierresa.Add(dossier);
                 await _context.SaveChangesAsync();
                 return View();
             }
-            return View("Paiement",cb);
+            return View("Paiement",dossierresa);
         }
     }
 }

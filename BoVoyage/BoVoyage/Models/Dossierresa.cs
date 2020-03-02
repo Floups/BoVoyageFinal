@@ -24,7 +24,6 @@ namespace BoVoyage.Models
         [Display(Name = "IdVoyage")]
         [Required(ErrorMessage = "Champ requis.")]
         public int IdVoyage { get; set; }
-        public decimal PrixTotal { get; set; }
 
         [Display(Name = "Prix total")]
         [Required(ErrorMessage = "Champ requis.")]

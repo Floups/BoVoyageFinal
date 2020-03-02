@@ -1,26 +1,44 @@
 ﻿@model BoVoyage.Models.Voyage
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Notre Voyage";
 }
 
-<h1>@Model.IdDestinationNavigation.Nom</h1>
+<h1 class="text-center mb-3">@Model.IdDestinationNavigation.Nom</h1>
 
+<div class="row justify-content-center">
+    <div class="col-md-9">
+        <div class="card">
+            <div class="card-header">
+                <p>
+                    Partez en voyage du <strong>@Html.DisplayFor(modelItem => Model.DateDepart) </strong>
+                    au <strong>@Html.DisplayFor(modelItem => Model.DateRetour) </strong>
+                </p>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Votre Destination</h5>
+
+                <p>@Model.IdDestinationNavigation.Description</p>
+
+                <h5 class="card-title">Votre Voyage</h5>
+                <p>@Model.Descriptif </p>
+                <p>
+                    Bénéficiez d'une réduction minimum de <strong>@((int)(Model.Reduction * 100))%</strong> par rapport au prix d'agence.
+                    Transport et hébergement tout compris pour la somme de <strong>@Html.DisplayFor(modelItem => Model.PrixHt)</strong> (HT) par personne!
+                </p>
+                <p>Réservez vite! Il ne reste plus que <strong>@Model.PlacesDispo places disponibles!</strong> </p>
+            </div>
+            <div class="card-footer d-flex justify-content-center">
+                <a asp-action="Index" asp-controller="Voyages" class="btn btn-primary mr-3"> Précédent </a>
+                <a asp-action="Index" asp-controller="Reservation" asp-route-idVoyage="@Model.Id" class="btn btn-success ml-3"> Je réserve maintenant!</a><br />
+            </div>
+        </div>
+    </div>
+</div>
 <div>
-    <p>@Model.IdDestinationNavigation.</p>
-    <p>
-        Partez en voyage du <strong>@Html.DisplayFor(modelItem => Model.DateDepart) </strong>
-        au <strong>@Html.DisplayFor(modelItem => Model.DateRetour) </strong>
-    </p>
-    <p>@Model.IdDestinationNavigation.Description</p>
-    <p>@Model.Descriptif </p>
-    <p>
-        Bénéficiez d'une réduction minimum de <strong>@((int)(Model.Reduction * 100))%</strong> par rapport au prix d'agence.
-        Transport et hébergement tout compris pour la somme de <strong>@Html.DisplayFor(modelItem => Model.PrixHt)</strong> (HT) par personne!
-    </p>
-    <p>Réservez vite! Il ne reste plus que <strong>@Model.PlacesDispo places disponibles!</strong> </p>
-    <a asp-action="Index" asp-controller="Reservation" asp-route-idVoyage="@Model.Id" class="btn btn-primary"> Je réserve maintenant!</a><br/>
-    <a asp-action="Index" asp-controller="Voyages"> Précédent </a>
+    
+    
+    
 </div>
 
 

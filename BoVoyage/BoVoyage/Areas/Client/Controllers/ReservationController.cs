@@ -27,14 +27,25 @@ namespace BoVoyage.Areas.Client.Controllers
         // GET: Client/Reservation
         public async Task<IActionResult> Index(int idVoyage, int nbPersonnes)
         {
+            //Gestion si la personne a déjà réservé le voyage
+            var userMail = User.FindFirstValue(ClaimTypes.Name);
+            var personne = await _context.Personne
+                .Where(p => p.Email == userMail).Include(p => p.Client).ThenInclude(c => c.Dossierresa)
+                .FirstOrDefaultAsync();
+            if (personne.Client != null && personne.Client.Dossierresa.Where(d => d.IdVoyage == idVoyage).Any())
+            {
+                return RedirectToAction("Details", "Personnes");
+            }
+
+
             var voyage = await _context.Voyage.Where(v => v.Id == idVoyage).Include(v => v.IdDestinationNavigation).FirstOrDefaultAsync();
-            
+
             //Prix de base pour l'utilisateur 
             double prixTva = (double)voyage.PrixHt;
 
             //On s'assure que la liste de voyageur en session est déjà instancié
             List<Personne> voyageurs = HttpContext.Session.Get<List<Personne>>("voyageurs") == null ? new List<Personne>() : HttpContext.Session.Get<List<Personne>>("voyageurs");
-            
+
             List<double> prixParVoyageur = PrixParVoyageur((double)voyage.PrixHt, voyageurs);
 
             if (nbPersonnes > voyageurs.Count())
@@ -44,16 +55,16 @@ namespace BoVoyage.Areas.Client.Controllers
 
             foreach (var item in prixParVoyageur)
             {
-                prixTva += item; 
-                
+                prixTva += item;
+
             }
-            prixTva += prixTva*0.20; 
-            HttpContext.Session.Set("voyageurs",voyageurs);
+            prixTva += prixTva * 0.20;
+            HttpContext.Session.Set("voyageurs", voyageurs);
             ViewBag.Utilisateur = await _context.Personne.Where(p => p.Email == User.FindFirstValue(ClaimTypes.Name)).FirstOrDefaultAsync();
             ViewBag.PrixParVoyageur = prixParVoyageur;
             HttpContext.Session.Set("prix", prixTva);
             ViewBag.PrixTva = prixTva;
-            HttpContext.Session.Set("idVoyage",idVoyage);
+            HttpContext.Session.Set("idVoyage", idVoyage);
             var voyagePersonnes = new VoyagePersonnesViewModel(voyage, voyageurs);
 
             return View(voyagePersonnes);
@@ -92,12 +103,12 @@ namespace BoVoyage.Areas.Client.Controllers
         }
 
         public IActionResult SupprimerVoyageur(int idVoyageur, int idVoyage, int nbPersonnes)
-        {           
+        {
 
             var voyageurs = HttpContext.Session.Get<List<Personne>>("voyageurs");
             voyageurs.RemoveAt(idVoyageur);
             HttpContext.Session.Set("voyageurs", voyageurs);
-            return RedirectToAction(nameof(Index), new { idVoyage, nbPersonnes = nbPersonnes-1 });
+            return RedirectToAction(nameof(Index), new { idVoyage, nbPersonnes = nbPersonnes - 1 });
         }
 
         public IActionResult Paiement()
@@ -136,13 +147,13 @@ namespace BoVoyage.Areas.Client.Controllers
             if (ModelState.IsValid)
             {
                 var personne = await _context.Personne.Where(p => p.Email == User.FindFirstValue(ClaimTypes.Name)).FirstOrDefaultAsync();
-                if( personne.TypePers == 4)
+                if (personne.TypePers == 4)
                 {
                     personne.TypePers = 1;
-                    _context.Client.Add(new BoVoyage.Models.Client() { Id=personne.Id});
+                    _context.Client.Add(new BoVoyage.Models.Client() { Id = personne.Id });
                 }
 
-                foreach(var voyageur in HttpContext.Session.Get<List<Personne>>("voyageurs"))
+                foreach (var voyageur in HttpContext.Session.Get<List<Personne>>("voyageurs"))
                 {
                     if (voyageur.Nom != null)
                     {
@@ -167,7 +178,7 @@ namespace BoVoyage.Areas.Client.Controllers
                 return View();
             }
             ViewBag.Prix = HttpContext.Session.Get<double>("prix");
-            return View("Paiement",dossierresa);
+            return View("Paiement", dossierresa);
         }
     }
 }

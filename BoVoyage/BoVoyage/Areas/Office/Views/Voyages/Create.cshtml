@@ -13,7 +13,7 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="IdDestination" class="control-label"></label>
+                <label class="control-label">Destination</label>
                 <select asp-for="IdDestination" class ="form-control" asp-items="ViewBag.IdDestination"></select>
                 <a class="btn btn-primary" asp-area="Office" asp-controller="Destinations" asp-action="Create" asp-route-voyage="true">Créer Destination</a>
             </div>

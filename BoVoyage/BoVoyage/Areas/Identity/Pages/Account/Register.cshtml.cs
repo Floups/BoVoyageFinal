@@ -54,10 +54,10 @@ namespace BoVoyage.Areas.Identity.Pages.Account
             public string Nom { get; set; }
             [Required, StringLength(50)]
             public string Prenom { get; set; }
-            [Phone(ErrorMessage ="Format du numéro de téléphone incorrect")]
+            [Phone(ErrorMessage = "Format du numéro de téléphone incorrect")]
             public string Telephone { get; set; }
-            [Required( ErrorMessage = "Champ requis")]
-            [EmailAddress(ErrorMessage ="Format e-mail incorrect.")]
+            [Required(ErrorMessage = "Champ requis")]
+            [EmailAddress(ErrorMessage = "Format e-mail incorrect.")]
             [Display(Name = "Adresse e-mail")]
             public string Email { get; set; }
             [DataType(DataType.Date)]
@@ -86,13 +86,22 @@ namespace BoVoyage.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = Input.Email, Email = Input.Email, PhoneNumber=Input.Telephone};
+                var user = new IdentityUser { UserName = Input.Email, Email = Input.Email, PhoneNumber = Input.Telephone };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
                     if (_context.Personne.Where(p => p.Email == Input.Email).SingleOrDefault() == null)
                     {
-                        var personne = new Personne() { Nom = Input.Nom, Prenom = Input.Prenom, Civilite = Input.Civilite, Telephone = Input.Telephone, Email = Input.Email, TypePers = 4, Datenaissance = Input.Datenaissance };
+                        var personne = new Personne()
+                        {
+                            Nom = Input.Nom,
+                            Prenom = Input.Prenom,
+                            Civilite = Input.Civilite,
+                            Telephone = Input.Telephone,
+                            Email = Input.Email,
+                            TypePers = 4,
+                            Datenaissance = Input.Datenaissance
+                        };
                         _context.Personne.Add(personne);
                         await _context.SaveChangesAsync();
                     }

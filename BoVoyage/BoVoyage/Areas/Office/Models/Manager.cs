@@ -21,7 +21,7 @@ namespace BoVoyage.Areas.Office.Models
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "mot de passe")]
+        [Display(Name = "Mot de passe")]
         public string Password { get; set; }
     }
 }

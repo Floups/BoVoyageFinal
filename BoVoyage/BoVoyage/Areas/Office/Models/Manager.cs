@@ -11,15 +11,17 @@ namespace BoVoyage.Areas.Office.Models
         public string Id { get; set; }
 
         [Phone]
-        [Display(Name = "Phone Number")]
+        [Display(Name = "Numéro de téléphone")]
         public string PhoneNumber { get; set; }
 
         [Required]
         [EmailAddress]
+        [Display(Name = "Email")]
         public string Email { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
+        [Display(Name = "mot de passe")]
         public string Password { get; set; }
     }
 }

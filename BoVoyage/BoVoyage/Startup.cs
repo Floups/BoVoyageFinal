@@ -15,7 +15,6 @@ using Microsoft.Extensions.Hosting;
 using BoVoyage.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
-using System.Web.Mvc;
 
 namespace BoVoyage
 {

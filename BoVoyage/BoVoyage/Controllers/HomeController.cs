@@ -25,6 +25,8 @@ namespace BoVoyage.Controllers
 
         public async Task<IActionResult> Index()
         {
+            if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                return RedirectToAction("Index","Dashboard",new { Area="Office"});
             var voyagesMoinsCher = await _context.Voyage.OrderBy(v => v.PrixHt).Take(5).Include(v => v.IdDestinationNavigation).ThenInclude(d => d.Photo).ToListAsync();
             ViewBag.VoyagesMoinsCher = voyagesMoinsCher;
 

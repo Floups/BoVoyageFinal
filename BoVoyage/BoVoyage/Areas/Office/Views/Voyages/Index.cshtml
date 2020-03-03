@@ -70,6 +70,9 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.DateDepart)
             </th>
             <th>
@@ -96,34 +99,37 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DateDepart)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DateRetour)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PlacesDispo)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PrixHt)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Reduction)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Descriptif)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdDestinationNavigation.Nom)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Editer</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Détails</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Supprimer</a>
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateDepart)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateRetour)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PlacesDispo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrixHt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Reduction)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descriptif)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdDestinationNavigation.Nom)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Editer</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Détails</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Supprimer</a>
+            </td>
+        </tr>
         }
     </tbody>
 </table>

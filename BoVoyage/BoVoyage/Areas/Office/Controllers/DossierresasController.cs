@@ -61,9 +61,7 @@ namespace BoVoyage.Areas.Office.Controllers
             {
                 return NotFound();
             }
-            ViewData["IdClient"] = new SelectList(_context.Client, "Id", "Id", dossierresa.IdClient);
             ViewData["IdEtatDossier"] = new SelectList(_context.Etatdossier, "Id", "Libelle", dossierresa.IdEtatDossier);
-            ViewData["IdVoyage"] = new SelectList(_context.Voyage, "Id", "Id", dossierresa.IdVoyage);
             return View(dossierresa);
         }
 
@@ -74,14 +72,28 @@ namespace BoVoyage.Areas.Office.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, byte IdEtatDossier)
         {
-            
-            var dossier =await _context.Dossierresa.FindAsync(id);
-            dossier.IdEtatDossier = IdEtatDossier;                        
-            
-                    _context.Update(dossier);
-                    await _context.SaveChangesAsync();
-                
-            
+
+            var dossier = await _context.Dossierresa.Include(d => d.IdVoyageNavigation).ThenInclude(v => v.Voyageur).SingleOrDefaultAsync(d => d.Id == id);
+            if (IdEtatDossier == 3)
+            {
+                var voyage = dossier.IdVoyageNavigation;
+                voyage.PlacesDispo += voyage.Voyageur.Count();
+                _context.Voyage.Update(voyage);
+            }
+            else if (IdEtatDossier != 3 && dossier.IdEtatDossier == 3)
+            {
+                var voyage = dossier.IdVoyageNavigation;
+                voyage.PlacesDispo -= voyage.Voyageur.Count();
+                _context.Voyage.Update(voyage);
+            }
+            dossier.IdEtatDossier = IdEtatDossier;
+
+
+            _context.Update(dossier);
+            await _context.SaveChangesAsync();
+
+
+
             ViewData["IdEtatDossier"] = new SelectList(_context.Etatdossier, "Id", "Libelle", dossier.IdEtatDossier);
             return RedirectToAction(nameof(Index));
         }
@@ -112,7 +124,13 @@ namespace BoVoyage.Areas.Office.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var dossierresa = await _context.Dossierresa.FindAsync(id);
+            var dossierresa = await _context.Dossierresa.Include(d => d.IdVoyageNavigation).ThenInclude(v => v.Voyageur).SingleOrDefaultAsync(d => d.Id == id);
+            if (dossierresa.IdEtatDossier != 3)
+            {
+                var voyage = dossierresa.IdVoyageNavigation;
+                voyage.PlacesDispo += voyage.Voyageur.Count();
+                _context.Voyage.Update(voyage);
+            }
             _context.Dossierresa.Remove(dossierresa);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

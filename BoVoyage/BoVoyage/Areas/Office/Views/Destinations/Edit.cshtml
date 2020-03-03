@@ -42,25 +42,39 @@
                 <input type="submit" value="Sauvegarder" class="btn btn-primary" />
             </div>
         </form>
-        @foreach (var photo in Model.Photo)
-        {
-            <form asp-action="DeletePhoto" asp-route-id="@photo.Id" asp-route-idDest="@Model.Id">
-                <img src="/img/@photo.NomFichier" />
-                <button class="btn btn-danger" type="submit">X</button>
-            </form>
-        }
-        @if (Model.Photo.Count() > 1)
-        {
-            <form asp-action="DeletePhoto" asp-route-idDest="@Model.Id">
-                <button class="btn btn-danger" type="submit">Supprimer toutes les photos</button>
-            </form>
-        }
+        <section class="row">
+            @foreach (var photo in Model.Photo)
+            {
+                <div class="col-6">
+
+                    <form asp-action="DeletePhoto" asp-route-id="@photo.Id" asp-route-idDest="@Model.Id">
+                        <img src="/img/@photo.NomFichier" class="img-thumbnail"/>
+                        <div class="fomr-group d-flex justify-content-center mt-3">
+
+                            <button class="btn btn-danger" type="submit">X</button>
+                        </div>
+                    </form>
+                </div>
+            }
+        </section>
+        <section class="row">
+            @if (Model.Photo.Count() > 1)
+            {
+                <div class="col">
+                    <form asp-action="DeletePhoto" asp-route-idDest="@Model.Id">
+                        <div class="form-group d-flex justify-content-center">
+                            <button class="btn btn-danger" type="submit">Supprimer toutes les photos</button>
+                        </div>
+                    </form>
+                </div>
+            }
+        </section>
+            <div class="row d-flex justify-content-center">
+                <a asp-action="Index">Retour</a>
+            </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Retour</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

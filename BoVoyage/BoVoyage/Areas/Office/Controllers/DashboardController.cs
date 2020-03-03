@@ -7,11 +7,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BoVoyage.Areas.Office.Models;
 using BoVoyage.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BoVoyage.Areas.Office.Controllers
 {
     [Area("Office")]
-    //[Authorize(Roles = "Admin, Manager")]
+    [Authorize(Roles = "Admin, Manager")]
     public class DashboardController : Controller
     {
         private readonly BoVoyageContext _context;

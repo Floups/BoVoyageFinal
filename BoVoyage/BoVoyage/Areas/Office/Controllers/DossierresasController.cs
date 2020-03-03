@@ -6,10 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BoVoyage.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BoVoyage.Areas.Office.Controllers
 {
     [Area("Office")]
+    [Authorize(Roles = "Admin, Manager")]
     public class DossierresasController : Controller
     {
         private readonly BoVoyageContext _context;

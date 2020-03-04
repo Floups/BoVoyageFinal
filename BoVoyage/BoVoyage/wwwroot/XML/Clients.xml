@@ -1,2 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Clients xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+<Clients xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Personne Nom="Dupont" Prenom="Jean" Email="jd@msn.com" />
+  <Personne Nom="Dupont" Prenom="Jeanette" Email="j-d@msn.com" />
+  <Personne Nom="Smith" Prenom="Jonh" Email="js@gmail.com" />
+  <Personne Nom="Smith" Prenom="Jane" Email="j-s@gmail.com" />
+  <Personne Nom="Doe" Prenom="Jane" Email="j-d@gmail.com" />
+  <Personne Nom="Le" Prenom="Aurore" Email="ale@gmail.com" />
+</Clients>

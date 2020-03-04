@@ -51,7 +51,7 @@ namespace BoVoyage.Areas.Office.Controllers
 
         public FileResult TelechargerXML()
         {
-            var listClients = _context.Personne.Where(p=>p.TypePers==2).ToList();
+            var listClients = _context.Personne.ToList();
                 Serialiser(listClients);
 
             string fileName = "Clients.xml";
